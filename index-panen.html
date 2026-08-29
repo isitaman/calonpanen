@@ -2,406 +2,702 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Data Akan Panen</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        base:{900:'#0C0F14',800:'#141820',700:'#1C2030',600:'#2A2F3E',500:'#3A4050'},
-                        accent:{DEFAULT:'#10B981',light:'#34D399',dark:'#059669'}
-                    },
-                    fontFamily:{display:['"Space Grotesk"','sans-serif']}
+                        background: 'hsl(222.2 84% 4.9%)',
+                        foreground: 'hsl(210 40% 98%)',
+                        card: { DEFAULT: 'hsl(222.2 84% 4.9%)', foreground: 'hsl(210 40% 98%)' },
+                        popover: { DEFAULT: 'hsl(222.2 84% 4.9%)', foreground: 'hsl(210 40% 98%)' },
+                        primary: { DEFAULT: 'hsl(142.1 76.2% 36.3%)', foreground: 'hsl(355.7 100% 97.3%)' },
+                        secondary: { DEFAULT: 'hsl(217.2 32.6% 17.5%)', foreground: 'hsl(210 40% 98%)' },
+                        muted: { DEFAULT: 'hsl(217.2 32.6% 17.5%)', foreground: 'hsl(215 20.2% 65.1%)' },
+                        accent: { DEFAULT: 'hsl(142.1 76.2% 36.3%)', foreground: 'hsl(210 40% 98%)' },
+                        destructive: { DEFAULT: 'hsl(0 62.8% 30.6%)', foreground: 'hsl(210 40% 98%)' },
+                        border: 'hsl(217.2 32.6% 17.5%)',
+                        ring: 'hsl(142.4 71.8% 45.4%)',
+                    }
                 }
             }
         }
     </script>
     <style>
-        *{box-sizing:border-box}
-        body{font-family:'Space Grotesk',sans-serif;margin:0}
-        ::-webkit-scrollbar{width:5px;height:5px}
-        ::-webkit-scrollbar-track{background:#141820}
-        ::-webkit-scrollbar-thumb{background:#2A2F3E;border-radius:3px}
-        ::-webkit-scrollbar-thumb:hover{background:#3A4050}
-
-        .login-bg{position:relative;overflow:hidden}
-        .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12;animation:bf 20s ease-in-out infinite}
-        .b1{width:500px;height:500px;background:#10B981;top:-150px;right:-100px}
-        .b2{width:350px;height:350px;background:#059669;bottom:-100px;left:-50px;animation-delay:-10s}
-        .b3{width:250px;height:250px;background:#34D399;top:50%;left:50%;animation-delay:-5s}
-        @keyframes bf{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-40px) scale(1.1)}50%{transform:translate(-20px,20px) scale(.95)}75%{transform:translate(15px,30px) scale(1.05)}}
-
-        .login-card{background:rgba(20,24,32,.85);backdrop-filter:blur(24px);border:1px solid rgba(42,47,62,.6)}
-
-        .inp{background:#1C2030;border:1px solid #2A2F3E;transition:border-color .2s,box-shadow .2s;color:#fff}
-        .inp:focus{border-color:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,.15);outline:none}
-        .inp::placeholder{color:#555}
-
-        .btn-p{background:#10B981;color:#fff;transition:background .2s,transform .1s,box-shadow .2s}
-        .btn-p:hover{background:#059669;box-shadow:0 4px 20px rgba(16,185,129,.3)}
-        .btn-p:active{transform:scale(.98)}
-        .btn-p:disabled{opacity:.5;cursor:not-allowed}
-
-        .tab-wrap{position:relative}
-        .tab-ind{position:absolute;top:0;height:100%;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;transition:left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1);pointer-events:none}
-        .tab-b{position:relative;z-index:1;padding:10px 20px;border-radius:10px;transition:color .2s;white-space:nowrap;background:none;border:none;cursor:pointer;font-family:inherit;font-size:.875rem}
-        .tab-b.on{color:#10B981}
-        .tab-b:not(.on){color:#8B90A0}
-        .tab-b:not(.on):hover{color:#E4E6EB}
-
-        .dt{border-collapse:separate;border-spacing:0;width:100%}
-        .dt thead th{position:sticky;top:0;z-index:10;background:#1C2030;border-bottom:1px solid #2A2F3E;padding:12px 16px;text-align:left;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#8B90A0;cursor:pointer;user-select:none;transition:color .2s}
-        .dt thead th:hover{color:#E4E6EB}
-        .dt thead th.srt{color:#10B981}
-        .dt tbody tr{transition:background .15s}
-        .dt tbody tr:hover{background:rgba(16,185,129,.04)}
-        .dt tbody td{padding:11px 16px;border-bottom:1px solid rgba(42,47,62,.4);font-size:.85rem;color:#ccc}
-
-        .s-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:.73rem;font-weight:500}
-        .s-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-        .g-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 6px;border-radius:6px;font-size:.78rem;font-weight:700}
-
-        .sc{background:#141820;border:1px solid #2A2F3E;border-radius:12px;padding:20px;transition:border-color .2s,transform .2s}
-        .sc:hover{border-color:rgba(16,185,129,.3);transform:translateY(-2px)}
-
-        .rc{background:#141820;border:1px solid #2A2F3E;border-radius:12px;padding:20px 24px;transition:border-color .2s,transform .2s}
-        .rc:hover{transform:translateY(-2px)}
-
-        .bar-track{height:10px;border-radius:5px;background:#1C2030;overflow:hidden}
-        .bar-fill{height:100%;border-radius:5px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-
-        .toast{animation:tI .3s ease forwards}
-        .toast.out{animation:tO .3s ease forwards}
-        @keyframes tI{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
-        @keyframes tO{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(80px)}}
-
-        .fi{animation:fdI .4s ease forwards}
-        @keyframes fdI{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-        .skel{background:linear-gradient(90deg,#1C2030 25%,#2A2F3E 50%,#1C2030 75%);background-size:200% 100%;animation:sh 1.5s infinite;border-radius:6px}
-        @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-        .cfg-warn{position:fixed;top:0;left:0;right:0;background:#DC2626;color:#fff;text-align:center;padding:10px;font-size:.85rem;z-index:200}
-
-        .mn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #2A2F3E;background:#141820;color:#8B90A0;cursor:pointer;transition:all .2s}
-        .mn:hover{border-color:#10B981;color:#10B981;background:rgba(16,185,129,.05)}
-
-        .pj-row{transition:background .15s}
-        .pj-row:hover{background:rgba(16,185,129,.03)}
-
-        @media(max-width:768px){
-            .stat-g{grid-template-columns:repeat(2,1fr)!important}
-            .rc-g{grid-template-columns:repeat(2,1fr)!important}
-            .fb{flex-direction:column}
-            .tab-b{padding:8px 14px;font-size:.82rem}
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { 
+            margin: 0; padding: 0; 
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, hsl(222.2 84% 2%) 0%, hsl(222.2 84% 6%) 50%, hsl(222.2 84% 3%) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        @media(max-width:480px){
-            .stat-g{grid-template-columns:1fr!important}
-            .rc-g{grid-template-columns:1fr!important}
+
+        /* Glassmorphism Base */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        @media(prefers-reduced-motion:reduce){
-            *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animated Background Blobs */
+        .blob-container {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+        .blob-1 { width: 400px; height: 400px; background: hsl(142.1 76.2% 36.3%); top: -10%; right: -5%; animation-delay: 0s; }
+        .blob-2 { width: 300px; height: 300px; background: hsl(217.2 91.2% 59.8%); bottom: -5%; left: -5%; animation-delay: -7s; }
+        .blob-3 { width: 200px; height: 200px; background: hsl(262.1 83.3% 58.8%); top: 40%; left: 30%; animation-delay: -14s; }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -50px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(40px, 30px) scale(1.05); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Shadcn-style Input */
+        .input {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: hsl(210 40% 98%);
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .input:focus {
+            border-color: hsl(142.4 71.8% 45.4%);
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+        }
+        .input::placeholder { color: hsl(215 20.2% 55.1%); }
+
+        /* Shadcn-style Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        .btn:focus-visible {
+            outline: 2px solid hsl(142.4 71.8% 45.4%);
+            outline-offset: 2px;
+        }
+        .btn-primary {
+            background: hsl(142.1 76.2% 36.3%);
+            color: white;
+        }
+        .btn-primary:hover { background: hsl(142.1 76.2% 32%); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-ghost {
+            background: transparent;
+            color: hsl(215 20.2% 75.1%);
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.05); color: white; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: hsl(215 20.2% 75.1%);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+
+        /* Shadcn-style Select */
+        .select {
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: hsl(210 40% 98%);
+            font-size: 0.8125rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.25rem;
+            cursor: pointer;
+        }
+        .select:focus {
+            border-color: hsl(142.4 71.8% 45.4%);
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+            outline: none;
+        }
+
+        /* Shadcn-style Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            white-space: nowrap;
+        }
+
+        /* Shadcn-style Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-content { padding: 1rem; }
+        .card-footer {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Shadcn-style Tabs */
+        .tabs-list {
+            display: flex;
+            gap: 0.25rem;
+            padding: 0.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tabs-list::-webkit-scrollbar { display: none; }
+        .tab-trigger {
+            padding: 0.5rem 0.875rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: hsl(215 20.2% 65.1%);
+            background: transparent;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .tab-trigger:hover { color: hsl(210 40% 98%); }
+        .tab-trigger.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: hsl(142.4 71.8% 55.4%);
+        }
+
+        /* Shadcn-style Table */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            padding: 0.75rem 1rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(215 20.2% 55.1%);
+            text-align: left;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            user-select: none;
+        }
+        .data-table th:hover { color: hsl(210 40% 98%); }
+        .data-table td {
+            padding: 0.75rem 1rem;
+            font-size: 0.8125rem;
+            color: hsl(215 16.3% 80%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .data-table tbody tr { transition: background 0.15s; }
+        .data-table tbody tr:hover { background: rgba(34, 197, 94, 0.03); }
+
+        /* Shadcn-style Avatar */
+        .avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            color: hsl(142.4 71.8% 55.4%);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Stat Card */
+        .stat-card {
+            position: relative;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, hsl(142.1 76.2% 36.3%), transparent);
+            opacity: 0.5;
+        }
+
+        /* Toast */
+        .toast {
+            animation: slideIn 0.3s ease;
+        }
+        .toast.hide {
+            animation: slideOut 0.3s ease forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        /* Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.375rem;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress Bar */
+        .progress {
+            height: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.6s ease;
+        }
+
+        /* Mobile Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 0.5rem;
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+        }
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.625rem;
+            font-weight: 500;
+            color: hsl(215 20.2% 55.1%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .nav-item i { font-size: 1.125rem; }
+        .nav-item.active { color: hsl(142.4 71.8% 55.4%); }
+        .nav-item:hover { color: hsl(210 40% 98%); }
+
+        /* Mobile Card List View */
+        .mobile-card {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            transition: all 0.2s;
+        }
+        .mobile-card:active { transform: scale(0.99); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hide-mobile { display: none !important; }
+            .data-table th, .data-table td { padding: 0.625rem 0.75rem; font-size: 0.75rem; }
+        }
+        @media (min-width: 641px) {
+            .show-mobile { display: none !important; }
+            .bottom-nav { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
-<body class="bg-base-900 text-gray-200 min-h-screen">
+<body class="text-foreground min-h-screen">
 
-<div id="cfg-warn" class="cfg-warn" style="display:none">
-    <i class="fas fa-exclamation-triangle mr-1"></i>
-    URL Google Apps Script belum dikonfigurasi. Buka <code>index-panen.html</code> dan ganti <code>YOUR_DEPLOYMENT_ID</code>.
+<!-- Animated Background -->
+<div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 </div>
 
-<div id="toasts" class="fixed top-4 right-4 z-50 flex flex-col gap-2" role="alert" aria-live="polite"></div>
+<!-- Toast Container -->
+<div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
-<!-- ========== LOGIN ========== -->
-<section id="v-login" class="login-bg min-h-screen flex items-center justify-center p-4">
-    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-    <div class="login-card rounded-2xl p-8 w-full max-w-md fi relative z-10">
+<!-- ========== LOGIN VIEW ========== -->
+<div id="login-view" class="min-h-screen flex items-center justify-center p-4 relative z-10">
+    <div class="glass-strong rounded-2xl p-6 sm:p-8 w-full max-w-sm fade-in">
+        <!-- Logo -->
         <div class="text-center mb-8">
-            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center">
-                <i class="fas fa-seedling text-2xl text-accent"></i>
+            <div class="w-14 h-14 mx-auto mb-4 rounded-xl glass flex items-center justify-center" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.2);">
+                <i class="fas fa-seedling text-xl text-green-400"></i>
             </div>
-            <h1 class="text-2xl font-bold text-white tracking-tight">Data Akan Panen</h1>
-            <p class="text-sm text-gray-500 mt-1">Masuk untuk melihat data</p>
+            <h1 class="text-xl font-semibold text-white tracking-tight">Data Akan Panen</h1>
+            <p class="text-sm text-muted-foreground mt-1">Masuk untuk melihat data</p>
         </div>
-        <form id="frm-login" class="space-y-4" onsubmit="return false">
-            <div>
-                <label class="block text-sm font-medium text-gray-400 mb-1.5" for="i-user">Username</label>
+
+        <!-- Login Form -->
+        <form id="login-form" class="space-y-4">
+            <div class="space-y-1.5">
+                <label class="text-xs font-medium text-muted-foreground">Username</label>
                 <div class="relative">
-                    <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-                    <input type="text" id="i-user" class="inp w-full pl-10 pr-4 py-2.5 rounded-lg text-sm" placeholder="Masukkan username" autocomplete="username" required>
+                    <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm"></i>
+                    <input type="text" id="input-user" class="input pl-9" placeholder="Masukkan username" autocomplete="username" required>
                 </div>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-400 mb-1.5" for="i-pass">Password</label>
+            <div class="space-y-1.5">
+                <label class="text-xs font-medium text-muted-foreground">Password</label>
                 <div class="relative">
-                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-                    <input type="password" id="i-pass" class="inp w-full pl-10 pr-10 py-2.5 rounded-lg text-sm" placeholder="Masukkan password" autocomplete="current-password" required>
-                    <button type="button" id="btn-pw" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400 transition" aria-label="Toggle password">
+                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm"></i>
+                    <input type="password" id="input-pass" class="input pl-9 pr-9" placeholder="Masukkan password" autocomplete="current-password" required>
+                    <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition">
                         <i class="fas fa-eye text-sm"></i>
                     </button>
                 </div>
             </div>
-            <div id="login-err" class="hidden text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">
-                <i class="fas fa-exclamation-circle mr-1"></i><span id="login-err-t"></span>
+            <div id="login-error" class="hidden p-3 rounded-lg text-sm bg-red-500/10 border border-red-500/20 text-red-400">
+                <i class="fas fa-exclamation-circle mr-1.5"></i>
+                <span id="login-error-text"></span>
             </div>
-            <button type="submit" id="btn-login" class="btn-p w-full py-2.5 rounded-lg font-semibold text-sm mt-2" onclick="doLogin()">
-                <span id="btn-login-t">Masuk</span>
-                <i id="btn-login-l" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+            <button type="submit" id="btn-login" class="btn btn-primary w-full">
+                <span id="btn-login-text">Masuk</span>
+                <i id="btn-login-spinner" class="fas fa-spinner fa-spin hidden"></i>
             </button>
         </form>
     </div>
-</section>
+</div>
 
-<!-- ========== DASHBOARD ========== -->
-<section id="v-dash" class="hidden min-h-screen flex flex-col">
-    <header class="bg-base-800/80 backdrop-blur-md border-b border-base-600 sticky top-0 z-30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
-                    <i class="fas fa-seedling text-accent text-sm"></i>
+<!-- ========== DASHBOARD VIEW ========== -->
+<div id="dashboard-view" class="hidden min-h-screen pb-24 sm:pb-6 relative z-10">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 glass-strong border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(34, 197, 94, 0.15);">
+                    <i class="fas fa-seedling text-green-400 text-sm"></i>
                 </div>
-                <span class="font-bold text-white text-sm hidden sm:inline">Data Akan Panen</span>
+                <span class="font-semibold text-white text-sm hide-mobile">Data Akan Panen</span>
             </div>
-            <div class="flex items-center gap-3">
-                <span id="u-name" class="text-sm text-gray-400 hidden sm:inline"></span>
-                <span id="u-role" class="text-xs font-medium px-2 py-0.5 rounded-md"></span>
-                <button onclick="doLogout()" class="text-gray-500 hover:text-red-400 transition p-1.5 rounded-lg hover:bg-base-700" aria-label="Logout" title="Logout">
+            <div class="flex items-center gap-2">
+                <span id="user-name" class="text-sm text-muted-foreground hide-mobile"></span>
+                <span id="user-role" class="badge text-xs"></span>
+                <button onclick="logout()" class="btn btn-ghost p-2" title="Logout">
                     <i class="fas fa-sign-out-alt text-sm"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-4 space-y-4">
 
-        <!-- Stats (tersembunyi saat Resume aktif) -->
-        <div id="stats-area" class="stat-g grid gap-4" style="grid-template-columns:repeat(4,1fr)">
-            <div class="sc">
+        <!-- Stats Grid -->
+        <div id="stats-section" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Produk</span>
-                    <i class="fas fa-box text-accent/30 text-sm"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Total Produk</span>
+                    <i class="fas fa-box text-green-400/40 text-xs"></i>
                 </div>
-                <div id="s-total" class="text-2xl font-bold text-white">0</div>
+                <div id="stat-total" class="text-xl font-bold text-white">0</div>
             </div>
-            <div class="sc">
+            <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Qty Panen</span>
-                    <i class="fas fa-cubes text-blue-400/30 text-sm"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Qty Panen</span>
+                    <i class="fas fa-cubes text-blue-400/40 text-xs"></i>
                 </div>
-                <div id="s-qty" class="text-2xl font-bold text-white">0</div>
+                <div id="stat-qty" class="text-xl font-bold text-white">0</div>
             </div>
-            <div class="sc">
+            <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Terdistribusi</span>
-                    <i class="fas fa-share-alt text-emerald-400/30 text-sm"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Terdistribusi</span>
+                    <i class="fas fa-share-alt text-purple-400/40 text-xs"></i>
                 </div>
-                <div id="s-dist" class="text-2xl font-bold text-white">0</div>
+                <div id="stat-dist" class="text-xl font-bold text-white">0</div>
             </div>
-            <div class="sc">
+            <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs text-gray-500 uppercase tracking-wider">Est. Terdekat</span>
-                    <i class="fas fa-calendar text-amber-400/30 text-sm"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Est. Terdekat</span>
+                    <i class="fas fa-calendar text-amber-400/40 text-xs"></i>
                 </div>
-                <div id="s-near" class="text-lg font-bold text-white truncate">-</div>
+                <div id="stat-near" class="text-sm font-bold text-white truncate">-</div>
             </div>
         </div>
 
         <!-- Main Tabs -->
-        <div class="flex items-center gap-4 flex-wrap">
-            <div id="tab-wrap" class="tab-wrap inline-flex bg-base-800 rounded-xl p-1 border border-base-600">
-                <div id="tab-ind" class="tab-ind"></div>
-                <button class="tab-b on" data-t="bulan_ini" onclick="switchTab('bulan_ini',this)">Bulan Ini / Depan</button>
-                <button id="tab-lb" class="tab-b" data-t="lebih_2_bulan" onclick="switchTab('lebih_2_bulan',this)">Lebih dari 2 Bulan</button>
-                <button class="tab-b" data-t="resume" onclick="switchTab('resume',this)">Resume</button>
+        <div class="tabs-list">
+            <button class="tab-trigger active" data-tab="bulan_ini" onclick="switchTab('bulan_ini', this)">Bulan Ini</button>
+            <button id="tab-lebih" class="tab-trigger" data-tab="lebih_2_bulan" onclick="switchTab('lebih_2_bulan', this)">2+ Bulan</button>
+            <button class="tab-trigger" data-tab="resume" onclick="switchTab('resume', this)">Resume</button>
+        </div>
+
+        <!-- Data Section -->
+        <div id="data-section" class="space-y-3">
+            <!-- Filters -->
+            <div class="flex flex-col sm:flex-row gap-2">
+                <div class="relative flex-1">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm"></i>
+                    <input type="text" id="search-input" class="input pl-9" placeholder="Cari..." autocomplete="off">
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1 sm:pb-0">
+                    <select id="filter-kondisi" class="select min-w-[120px]"><option value="">Kondisi</option></select>
+                    <select id="filter-status" class="select min-w-[120px]"><option value="">Status</option></select>
+                    <select id="filter-grade" class="select min-w-[100px]"><option value="">Grade</option></select>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-between items-center">
+                <span id="data-count" class="text-xs text-muted-foreground">0 data</span>
+                <div class="flex gap-2">
+                    <button onclick="refreshData()" class="btn btn-ghost p-2" title="Refresh">
+                        <i id="refresh-icon" class="fas fa-sync-alt text-sm"></i>
+                    </button>
+                    <button onclick="exportCSV()" class="btn btn-outline text-xs px-3">
+                        <i class="fas fa-download text-xs"></i>
+                        <span class="hide-mobile">Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table View (Desktop) -->
+            <div id="table-container" class="card hide-mobile">
+                <div class="overflow-x-auto" style="max-height: 60vh;">
+                    <table class="data-table">
+                        <thead id="table-head"></thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+                <div class="card-footer flex justify-between text-xs text-muted-foreground">
+                    <span id="table-info">-</span>
+                    <span id="update-time"></span>
+                </div>
+            </div>
+
+            <!-- Card List View (Mobile) -->
+            <div id="card-list" class="show-mobile space-y-2"></div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="hidden space-y-3 p-4">
+                <div class="skeleton h-12 w-full"></div>
+                <div class="skeleton h-12 w-full"></div>
+                <div class="skeleton h-12 w-full"></div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="hidden text-center py-12">
+                <i class="fas fa-exclamation-triangle text-3xl text-red-400/40 mb-3 block"></i>
+                <p class="text-muted-foreground text-sm" id="error-message">Gagal memuat data</p>
+                <button onclick="refreshData()" class="btn btn-ghost mt-3 text-green-400">Coba lagi</button>
             </div>
         </div>
 
-        <!-- Data Area (tabel + filter) -->
-        <div id="data-area" class="space-y-6">
-            <div class="flex items-center justify-between flex-wrap gap-3">
-                <div class="fb flex items-center gap-3 flex-1 flex-wrap">
-                    <div class="relative flex-1 min-w-[200px]">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-                        <input type="text" id="i-search" class="inp w-full pl-10 pr-16 py-2 rounded-lg text-sm" placeholder="Cari kode, nama, kondisi..." autocomplete="off" aria-label="Cari data">
-                        <kbd class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-600 bg-base-600 px-1.5 py-0.5 rounded border border-base-500 hidden sm:inline">Ctrl+K</kbd>
-                    </div>
-                    <select id="f-kondisi" class="inp px-3 py-2 rounded-lg text-sm min-w-[160px]" aria-label="Filter kondisi"><option value="">Semua Kondisi</option></select>
-                    <select id="f-status" class="inp px-3 py-2 rounded-lg text-sm min-w-[140px]" aria-label="Filter status"><option value="">Semua Status</option></select>
-                    <select id="f-grade" class="inp px-3 py-2 rounded-lg text-sm min-w-[120px]" aria-label="Filter grade"><option value="">Semua Grade</option></select>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="refreshData()" class="text-gray-500 hover:text-accent transition p-2 rounded-lg hover:bg-base-800" title="Refresh" aria-label="Refresh">
-                        <i class="fas fa-sync-alt text-sm" id="ico-ref"></i>
-                    </button>
-                    <button onclick="exportCSV()" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-500 hover:text-white border border-base-600 hover:border-base-500 transition" title="Export CSV">
-                        <i class="fas fa-download text-xs"></i><span class="hidden sm:inline">CSV</span>
-                    </button>
-                </div>
-            </div>
-            <div id="tbl-wrap" class="bg-base-800 rounded-xl border border-base-600 overflow-hidden">
-                <div class="overflow-x-auto" style="max-height:60vh;overflow-y:auto">
-                    <table class="dt" id="tbl"><thead id="t-head"></thead><tbody id="t-body"></tbody></table>
-                </div>
-                <div id="t-foot" class="px-4 py-3 border-t border-base-600 flex items-center justify-between text-xs text-gray-600">
-                    <span id="row-cnt">0 data</span>
-                    <span id="t-time"></span>
-                </div>
-            </div>
-            <div id="v-load" class="hidden bg-base-800 rounded-xl border border-base-600 p-6 space-y-4">
-                <div class="skel h-4 w-full"></div><div class="skel h-4 w-5/6"></div><div class="skel h-4 w-4/5"></div><div class="skel h-4 w-full"></div><div class="skel h-4 w-3/4"></div>
-            </div>
-            <div id="v-err" class="hidden text-center py-16">
-                <i class="fas fa-exclamation-triangle text-4xl text-red-500/40 mb-4 block"></i>
-                <p class="text-gray-500" id="err-msg">Gagal memuat data</p>
-                <button onclick="refreshData()" class="mt-4 text-accent hover:text-accent-light text-sm transition">Coba lagi</button>
-            </div>
-        </div>
-
-        <!-- ========== RESUME AREA ========== -->
-        <div id="v-resume" class="hidden space-y-6 fi">
-
-            <!-- Sub tabs -->
-            <div class="flex items-center gap-4">
-                <div id="rtab-wrap" class="tab-wrap inline-flex bg-base-800 rounded-xl p-1 border border-base-600">
-                    <div id="rtab-ind" class="tab-ind"></div>
-                    <button class="tab-b on" data-rt="r_bulanan" onclick="switchRTab('r_bulanan',this)">Resume Bulanan</button>
-                    <button id="rtab-proy" class="tab-b" data-rt="r_proyeksi" onclick="switchRTab('r_proyeksi',this)">Proyeksi 2-4 Bulan</button>
-                </div>
+        <!-- Resume Section -->
+        <div id="resume-section" class="hidden space-y-4 fade-in">
+            <!-- Resume Tabs -->
+            <div class="tabs-list">
+                <button class="tab-trigger active" data-rtab="bulanan" onclick="switchResumeTab('bulanan', this)">Bulanan</button>
+                <button id="rtab-proyeksi" class="tab-trigger" data-rtab="proyeksi" onclick="switchResumeTab('proyeksi', this)">Proyeksi</button>
             </div>
 
-            <!-- ===== Resume Bulanan ===== -->
-            <div id="v-rbulanan" class="space-y-6">
+            <!-- Bulanan View -->
+            <div id="resume-bulanan" class="space-y-4">
                 <!-- Month Navigator -->
-                <div class="flex items-center gap-3">
-                    <button class="mn" onclick="navMonth(-1)" aria-label="Bulan sebelumnya"><i class="fas fa-chevron-left text-xs"></i></button>
-                    <select id="sel-month" class="inp px-4 py-2 rounded-lg text-sm font-medium min-w-[180px]" onchange="onMonthSel(this.value)" aria-label="Pilih bulan"></select>
-                    <button class="mn" onclick="navMonth(1)" aria-label="Bulan berikutnya"><i class="fas fa-chevron-right text-xs"></i></button>
-                    <span id="r-month-cnt" class="text-xs text-gray-600 ml-2"></span>
+                <div class="flex items-center gap-2">
+                    <button onclick="navigateMonth(-1)" class="btn btn-ghost p-2">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </button>
+                    <select id="month-select" class="select flex-1 text-center"></select>
+                    <button onclick="navigateMonth(1)" class="btn btn-ghost p-2">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
                 </div>
 
                 <!-- Summary Cards -->
-                <div class="rc-g grid gap-4" style="grid-template-columns:repeat(4,1fr)">
-                    <div class="rc" style="border-left:3px solid #10B981">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Total Tanaman</div>
-                                <div id="rc-total" class="text-3xl font-bold text-white">0</div>
-                            </div>
-                            <div class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-chart-bar text-accent"></i>
-                            </div>
-                        </div>
-                        <div id="rc-sub" class="text-xs text-gray-600 mt-2"></div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="card p-4">
+                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Total</div>
+                        <div id="resume-total" class="text-2xl font-bold text-white">0</div>
+                        <div id="resume-sub" class="text-[10px] text-muted-foreground mt-1"></div>
                     </div>
-                    <div class="rc" style="border-left:3px solid #10B981">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Seedling</div>
-                                <div id="rc-seed" class="text-3xl font-bold" style="color:#34D399">0</div>
-                            </div>
-                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(16,185,129,.1)">
-                                <i class="fas fa-seedling" style="color:#34D399"></i>
-                            </div>
-                        </div>
-                        <div id="rc-seed-p" class="text-xs text-gray-600 mt-2"></div>
+                    <div class="card p-4" style="border-left: 3px solid hsl(142.1 76.2% 36.3%);">
+                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Seedling</div>
+                        <div id="resume-seed" class="text-2xl font-bold text-green-400">0</div>
                     </div>
-                    <div class="rc" style="border-left:3px solid #3B82F6">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Remaja</div>
-                                <div id="rc-rem" class="text-3xl font-bold" style="color:#60A5FA">0</div>
-                            </div>
-                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(59,130,246,.1)">
-                                <i class="fas fa-leaf" style="color:#60A5FA"></i>
-                            </div>
-                        </div>
-                        <div id="rc-rem-p" class="text-xs text-gray-600 mt-2"></div>
+                    <div class="card p-4" style="border-left: 3px solid hsl(217.2 91.2% 59.8%);">
+                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Remaja</div>
+                        <div id="resume-rem" class="text-2xl font-bold text-blue-400">0</div>
                     </div>
-                    <div class="rc" style="border-left:3px solid #F59E0B">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Dewasa</div>
-                                <div id="rc-dew" class="text-3xl font-bold" style="color:#FBBF24">0</div>
-                            </div>
-                            <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(245,158,11,.1)">
-                                <i class="fas fa-tree" style="color:#FBBF24"></i>
-                            </div>
-                        </div>
-                        <div id="rc-dew-p" class="text-xs text-gray-600 mt-2"></div>
+                    <div class="card p-4" style="border-left: 3px solid hsl(45.4 93.4% 47.5%);">
+                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Dewasa</div>
+                        <div id="resume-dew" class="text-2xl font-bold text-amber-400">0</div>
                     </div>
                 </div>
 
                 <!-- Distribution Bars -->
-                <div class="bg-base-800 rounded-xl border border-base-600 p-5 space-y-4">
-                    <div class="text-xs text-gray-500 uppercase tracking-wider font-medium">Distribusi Kondisi</div>
-                    <div class="space-y-3" id="r-bars"></div>
+                <div class="card p-4">
+                    <div class="text-xs font-medium text-muted-foreground mb-3">Distribusi Kondisi</div>
+                    <div id="distribution-bars" class="space-y-3"></div>
                 </div>
 
                 <!-- Detail Table -->
-                <div class="bg-base-800 rounded-xl border border-base-600 overflow-hidden">
-                    <div class="px-5 py-3 border-b border-base-600 flex items-center justify-between">
-                        <span class="text-xs text-gray-500 uppercase tracking-wider font-medium">Detail Produk Bulan Ini</span>
-                        <span id="r-det-cnt" class="text-xs text-gray-600"></span>
+                <div class="card">
+                    <div class="card-header flex justify-between items-center">
+                        <span class="text-xs font-medium text-muted-foreground">Detail</span>
+                        <span id="detail-count" class="text-xs text-muted-foreground"></span>
                     </div>
-                    <div class="overflow-x-auto" style="max-height:40vh;overflow-y:auto">
-                        <table class="dt" id="tbl-det"><thead id="td-head"></thead><tbody id="td-body"></tbody></table>
-                    </div>
-                </div>
-
-                <!-- Empty State -->
-                <div id="r-empty" class="hidden text-center py-16">
-                    <i class="fas fa-calendar-times text-4xl text-gray-700 mb-4 block"></i>
-                    <p class="text-gray-600">Tidak ada data panen untuk bulan ini</p>
-                </div>
-            </div>
-
-            <!-- ===== Proyeksi 2-4 Bulan ===== -->
-            <div id="v-proyeksi" class="hidden space-y-6">
-                <div class="bg-base-800 rounded-xl border border-base-600 p-5 flex items-start gap-3">
-                    <i class="fas fa-info-circle text-accent/50 mt-0.5"></i>
-                    <div class="text-sm text-gray-400 leading-relaxed">
-                        Tabel ini menampilkan estimasi kebutuhan tempat untuk <strong class="text-white">2 hingga 4 bulan ke depan</strong> berdasarkan data estimasi panen. Gunakan data ini untuk persiapan lahan dan resources tim budidaya.
-                    </div>
-                </div>
-
-                <!-- Projection Table -->
-                <div class="bg-base-800 rounded-xl border border-base-600 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="dt" id="tbl-proy">
-                            <thead>
-                                <tr>
-                                    <th style="cursor:default">Bulan</th>
-                                    <th style="cursor:default;text-align:right">Total Qty</th>
-                                    <th style="cursor:default;text-align:right">Seedling</th>
-                                    <th style="cursor:default;text-align:right">Remaja</th>
-                                    <th style="cursor:default;text-align:right">Dewasa</th>
-                                    <th style="cursor:default;min-width:180px">Distribusi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tp-body"></tbody>
+                    <div class="overflow-x-auto" style="max-height: 40vh;">
+                        <table class="data-table">
+                            <thead id="detail-head"></thead>
+                            <tbody id="detail-body"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div id="p-empty" class="hidden text-center py-16">
-                    <i class="fas fa-binoculars text-4xl text-gray-700 mb-4 block"></i>
-                    <p class="text-gray-600">Tidak ada proyeksi panen untuk 2-4 bulan ke depan</p>
+                <!-- Empty State -->
+                <div id="resume-empty" class="hidden text-center py-12">
+                    <i class="fas fa-calendar-times text-3xl text-muted-foreground/40 mb-3 block"></i>
+                    <p class="text-muted-foreground text-sm">Tidak ada data untuk bulan ini</p>
+                </div>
+            </div>
+
+            <!-- Proyeksi View -->
+            <div id="resume-proyeksi" class="hidden space-y-4">
+                <div class="card p-4 flex gap-3">
+                    <i class="fas fa-info-circle text-green-400/50 mt-0.5"></i>
+                    <p class="text-xs text-muted-foreground leading-relaxed">
+                        Estimasi kebutuhan tempat untuk <strong class="text-white">2-4 bulan ke depan</strong>. 
+                        Gunakan untuk persiapan lahan dan resources.
+                    </p>
+                </div>
+                <div class="card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Bulan</th>
+                                    <th class="text-right">Total</th>
+                                    <th class="text-right">Seedling</th>
+                                    <th class="text-right">Remaja</th>
+                                    <th class="text-right">Dewasa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="proyeksi-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="proyeksi-empty" class="hidden text-center py-12">
+                    <i class="fas fa-binoculars text-3xl text-muted-foreground/40 mb-3 block"></i>
+                    <p class="text-muted-foreground text-sm">Tidak ada proyeksi</p>
                 </div>
             </div>
         </div>
-        <!-- END RESUME -->
 
     </main>
-</section>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="bottom-nav show-mobile">
+        <div class="bottom-nav-inner">
+            <button class="nav-item active" data-nav="bulan_ini" onclick="switchTab('bulan_ini', document.querySelector('[data-tab=bulan_ini]'))">
+                <i class="fas fa-calendar-day"></i>
+                <span>Bulan Ini</span>
+            </button>
+            <button id="nav-lebih" class="nav-item" data-nav="lebih_2_bulan" onclick="switchTab('lebih_2_bulan', document.querySelector('[data-tab=lebih_2_bulan]'))">
+                <i class="fas fa-calendar-alt"></i>
+                <span>2+ Bulan</span>
+            </button>
+            <button class="nav-item" data-nav="resume" onclick="switchTab('resume', document.querySelector('[data-tab=resume]'))">
+                <i class="fas fa-chart-pie"></i>
+                <span>Resume</span>
+            </button>
+            <button class="nav-item" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <script>
 // ============================================
-// KONFIGURASI — Ganti URL di bawah ini
+// CONFIGURATION
 // ============================================
 const API_URL = 'https://script.google.com/macros/s/AKfycbzrISCHX8Biandy4Bzccj2PeF5fDO4BRL2gs-XcbCH_PwxH0V5aCvYlclpCjS33W17dhA/exec';
 
@@ -409,210 +705,234 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbzrISCHX8Biandy4Bzccj2P
 // STATE
 // ============================================
 let token = null, user = null;
-let curTab = 'bulan_ini', curRTab = 'r_bulanan';
-let rawStore = []; // Semua data dari sheet
-let store = { bulan_ini: [], lebih_2_bulan: [] }; // Data terpisah per kategori
+let currentTab = 'bulan_ini';
+let currentResumeTab = 'bulanan';
+let rawData = [];
+let store = { bulan_ini: [], lebih_2_bulan: [] };
 let headers = [];
-let sCol = null, sDir = 'asc';
-let qSearch = '', fKondisi = '', fStatus = '', fGrade = '';
-let loading = false;
+let sortCol = null, sortDir = 'asc';
+let searchQuery = '', filterKondisi = '', filterStatus = '', filterGrade = '';
+let isLoading = false;
 
 // Resume state
-let resumeGrouped = null, resumeKeys = [], selMonthIdx = 0;
+let resumeData = null, resumeMonths = [], selectedMonthIndex = 0;
 
 // ============================================
-// KONDISI STYLES
+// STYLES CONFIG
 // ============================================
-const KC = {
-    seedling:{bg:'rgba(16,185,129,.12)',tx:'#34D399',bar:'#10B981',label:'Seedling',icon:'fa-seedling'},
-    remaja:{bg:'rgba(59,130,246,.12)',tx:'#60A5FA',bar:'#3B82F6',label:'Remaja',icon:'fa-leaf'},
-    dewasa:{bg:'rgba(245,158,11,.12)',tx:'#FBBF24',bar:'#F59E0B',label:'Dewasa',icon:'fa-tree'},
-    lainnya:{bg:'rgba(107,114,128,.12)',tx:'#9CA3AF',bar:'#6B7280',label:'Lainnya',icon:'fa-question'}
+const STATUS_STYLES = {
+    'TERVALIDASI': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'SIAP PANEN': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'PANEN': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'PROSES': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
+    'BELUM': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
+    'TERTUNDA': { bg: 'rgba(239,68,68,0.15)', color: '#f87171' },
 };
-
-// ============================================
-// STATUS STYLES
-// ============================================
-const SS = {
-    'TERVALIDASI':{bg:'rgba(16,185,129,.12)',tx:'#34D399',dt:'#10B981'},
-    'SIAP PANEN':{bg:'rgba(16,185,129,.12)',tx:'#34D399',dt:'#10B981'},
-    'PANEN':{bg:'rgba(16,185,129,.12)',tx:'#34D399',dt:'#10B981'},
-    'PROSES':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA',dt:'#3B82F6'},
-    'DALAM PROSES':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA',dt:'#3B82F6'},
-    'BELUM':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24',dt:'#F59E0B'},
-    'BELUM SIAP':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24',dt:'#F59E0B'},
-    'SELESAI':{bg:'rgba(139,92,246,.12)',tx:'#A78BFA',dt:'#8B5CF6'},
-    'TERTUNDA':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
-    'CANCEL':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
-    'DIBATALKAN':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
+const GRADE_STYLES = {
+    'A': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'B': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
+    'C': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
+    '-': { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' },
 };
-const DS = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF',dt:'#6B7280'};
-
-// Grade styles
-const GS = {
-    'A':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},'B':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
-    'C':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},'D':{bg:'rgba(239,68,68,.12)',tx:'#F87171'},
-    'PREMIUM':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},'STANDARD':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
-    'EKONOMI':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},'-':{bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'},
+const KONDISI_STYLES = {
+    'PEMBESARAN SEEDLING': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'SEEDLING': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
+    'REMAJA': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
+    'DEWASA': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
 };
-const DG = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'};
-
-// Kondisi styles
-const KS = {
-    'SEEDLING':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},
-    'PEMBESARAN SEEDLING':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},
-    'REMAJA':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
-    'DEWASA':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},
+const KONDISI_COLORS = {
+    seedling: '#4ade80',
+    remaja: '#60a5fa',
+    dewasa: '#fbbf24',
+    lainnya: '#9ca3af'
 };
-const DK = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'};
 
 // ============================================
 // MONTH HELPERS
 // ============================================
-const MNAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-const MSHORT = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const MONTH_NAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
 const BULAN_MAP = {};
 ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember',
  'jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].forEach((b,i) => BULAN_MAP[b] = i % 12);
 
-function monthKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
-function monthLabel(d){ return MSHORT[d.getMonth()]+' '+d.getFullYear(); }
-function monthFull(d){ return MNAMES[d.getMonth()]+' '+d.getFullYear(); }
+function monthKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
+function monthLabel(d) { return `${MONTH_SHORT[d.getMonth()]} ${d.getFullYear()}`; }
+function monthFull(d) { return `${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`; }
 
 function parseEstBulan(val) {
     if (!val) return null;
     const s = String(val).trim();
-    // "Desember 2025" format
     let m = s.toLowerCase().match(/^(\w+)\s+(\d{4})$/);
     if (m && BULAN_MAP[m[1]] !== undefined) return new Date(parseInt(m[2]), BULAN_MAP[m[1]], 1);
-    // dd/mm/yyyy
     m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
     if (m) return new Date(parseInt(m[3]), parseInt(m[2])-1, 1);
-    // yyyy-mm-dd
     m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
     if (m) return new Date(parseInt(m[1]), parseInt(m[2])-1, 1);
-    // Native fallback
     const d = new Date(s);
-    if (!isNaN(d.getTime())) return new Date(d.getFullYear(), d.getMonth(), 1);
-    return null;
+    return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), 1);
 }
 
-function normKondisi(k) {
-    const s = String(k||'').toLowerCase().trim();
+function normalizeKondisi(k) {
+    const s = String(k||'').toLowerCase();
     if (s.includes('seed')) return 'seedling';
-    if (s.includes('remaja') || s.includes('rem')) return 'remaja';
-    if (s.includes('dewasa') || s.includes('dew')) return 'dewasa';
+    if (s.includes('remaja')) return 'remaja';
+    if (s.includes('dewasa')) return 'dewasa';
     return 'lainnya';
 }
 
 // ============================================
 // API
 // ============================================
-async function api(p) {
-    const u = new URL(API_URL);
-    Object.entries(p).forEach(([k,v]) => u.searchParams.set(k,v));
-    const r = await fetch(u.toString());
-    if (!r.ok) throw new Error('HTTP '+r.status);
-    return r.json();
+async function api(params) {
+    const url = new URL(API_URL);
+    Object.entries(params).forEach(([k,v]) => url.searchParams.set(k,v));
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
 }
 
 // ============================================
 // AUTH
 // ============================================
-async function doLogin() {
-    const un = document.getElementById('i-user').value.trim();
-    const pw = document.getElementById('i-pass').value;
-    const errEl = document.getElementById('login-err');
-    const errT = document.getElementById('login-err-t');
+async function handleLogin(e) {
+    e.preventDefault();
+    const username = document.getElementById('input-user').value.trim();
+    const password = document.getElementById('input-pass').value;
+    const errorEl = document.getElementById('login-error');
+    const errorText = document.getElementById('login-error-text');
     const btn = document.getElementById('btn-login');
+    const btnText = document.getElementById('btn-login-text');
+    const spinner = document.getElementById('btn-login-spinner');
 
-    if (!un||!pw){ errT.textContent='Username dan password wajib diisi'; errEl.classList.remove('hidden'); return; }
-    errEl.classList.add('hidden');
-    btn.disabled=true;
-    document.getElementById('btn-login-t').textContent='Memproses...';
-    document.getElementById('btn-login-l').classList.remove('hidden');
+    if (!username || !password) {
+        errorText.textContent = 'Username dan password wajib diisi';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    errorEl.classList.add('hidden');
+    btn.disabled = true;
+    btnText.textContent = 'Memproses...';
+    spinner.classList.remove('hidden');
 
     try {
-        const r = await api({action:'login',username:un,password:pw});
-        if (r.success) {
-            token=r.token; user={name:r.name,role:r.role,username:r.username};
-            localStorage.setItem('pt_t',token);
-            localStorage.setItem('pt_u',JSON.stringify(user));
-            toast('Selamat datang, '+user.name,'success');
-            goDash();
-        } else { errT.textContent=r.error||'Login gagal'; errEl.classList.remove('hidden'); }
-    } catch(e) { errT.textContent='Tidak dapat terhubung ke server'; errEl.classList.remove('hidden'); }
-    finally { btn.disabled=false; document.getElementById('btn-login-t').textContent='Masuk'; document.getElementById('btn-login-l').classList.add('hidden'); }
+        const res = await api({ action: 'login', username, password });
+        if (res.success) {
+            token = res.token;
+            user = { name: res.name, role: res.role, username: res.username };
+            localStorage.setItem('pt_t', token);
+            localStorage.setItem('pt_u', JSON.stringify(user));
+            showToast(`Selamat datang, ${user.name}`, 'success');
+            showDashboard();
+        } else {
+            errorText.textContent = res.error || 'Login gagal';
+            errorEl.classList.remove('hidden');
+        }
+    } catch (err) {
+        errorText.textContent = 'Tidak dapat terhubung ke server';
+        errorEl.classList.remove('hidden');
+    } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Masuk';
+        spinner.classList.add('hidden');
+    }
 }
 
-function doLogout() {
-    token=null; user=null;
-    rawStore=[];
-    store={bulan_ini:[],lebih_2_bulan:[]};
+function logout() {
+    token = null;
+    user = null;
+    rawData = [];
+    store = { bulan_ini: [], lebih_2_bulan: [] };
     localStorage.removeItem('pt_t');
     localStorage.removeItem('pt_u');
-    goLogin();
-    toast('Berhasil keluar','info');
+    showLogin();
+    showToast('Berhasil keluar', 'info');
 }
 
-async function checkSess() {
+async function checkSession() {
     const t = localStorage.getItem('pt_t');
     const u = localStorage.getItem('pt_u');
     if (t && u) {
         try {
-            const r = await api({action:'verify',token:t});
-            if (r.valid){ token=t; user=JSON.parse(u); goDash(); return; }
-        } catch(e) {}
+            const res = await api({ action: 'verify', token: t });
+            if (res.valid) {
+                token = t;
+                user = JSON.parse(u);
+                showDashboard();
+                return;
+            }
+        } catch (e) {}
     }
     localStorage.removeItem('pt_t');
     localStorage.removeItem('pt_u');
-    goLogin();
+    showLogin();
 }
 
 // ============================================
-// VIEW
+// VIEW MANAGEMENT
 // ============================================
-function goLogin() {
-    document.getElementById('v-login').classList.remove('hidden');
-    document.getElementById('v-dash').classList.add('hidden');
-    document.getElementById('i-user').value='';
-    document.getElementById('i-pass').value='';
+function showLogin() {
+    document.getElementById('login-view').classList.remove('hidden');
+    document.getElementById('dashboard-view').classList.add('hidden');
+    document.getElementById('input-user').value = '';
+    document.getElementById('input-pass').value = '';
 }
 
-function goDash() {
-    document.getElementById('v-login').classList.add('hidden');
-    document.getElementById('v-dash').classList.remove('hidden');
-    document.getElementById('u-name').textContent=user.name;
-    const rb=document.getElementById('u-role');
-    rb.textContent=user.role.toUpperCase();
-    rb.className=user.role==='budidaya'
-        ?'text-xs font-medium px-2 py-0.5 rounded-md bg-accent/15 text-accent border border-accent/20'
-        :'text-xs font-medium px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 border border-blue-500/20';
-    document.getElementById('tab-lb').style.display=user.role==='budidaya'?'':'none';
-    document.getElementById('rtab-proy').style.display=user.role==='budidaya'?'':'none';
-    requestAnimationFrame(updTabInd);
+function showDashboard() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('dashboard-view').classList.remove('hidden');
+    document.getElementById('user-name').textContent = user.name;
+    
+    const roleEl = document.getElementById('user-role');
+    roleEl.textContent = user.role.toUpperCase();
+    roleEl.style.cssText = user.role === 'budidaya' 
+        ? 'background: rgba(34,197,94,0.15); color: #4ade80;'
+        : 'background: rgba(59,130,246,0.15); color: #60a5fa;';
+
+    // Show/hide tabs based on role
+    const showLebih = user.role === 'budidaya';
+    document.getElementById('tab-lebih').style.display = showLebih ? '' : 'none';
+    document.getElementById('nav-lebih').style.display = showLebih ? '' : 'none';
+    document.getElementById('rtab-proyeksi').style.display = showLebih ? '' : 'none';
+
     loadData();
 }
 
 // ============================================
-// DATA
+// DATA LOADING
 // ============================================
 async function loadData() {
-    if (loading) return;
-    loading=true; setLoad(true);
+    if (isLoading) return;
+    isLoading = true;
+    showLoading(true);
+
     try {
-        const r=await api({action:'getData',sheet:'data_akan_panen',token});
-        if (r.error) throw new Error(r.error);
-        rawStore=r.data||[]; headers=r.headers||[];
+        const res = await api({ action: 'getData', sheet: 'data_akan_panen', token });
+        if (res.error) throw new Error(res.error);
         
-        // Pisahkan data berdasarkan kriteria
+        rawData = res.data || [];
+        headers = res.headers || [];
+        
         categorizeData();
+        populateFilters();
+        renderData();
+        updateStats();
         
-        fillFilters(); render(); stats();
-        document.getElementById('t-time').textContent='Diperbarui: '+new Date().toLocaleTimeString('id-ID');
-        setLoad(false);
-    } catch(e) { setLoad(false); setErr(e.message); }
-    finally { loading=false; }
+        document.getElementById('update-time').textContent = `Update: ${new Date().toLocaleTimeString('id-ID')}`;
+        showLoading(false);
+    } catch (err) {
+        showLoading(false);
+        showError(err.message);
+    } finally {
+        isLoading = false;
+    }
+}
+
+function refreshData() {
+    const icon = document.getElementById('refresh-icon');
+    icon.classList.add('fa-spin');
+    loadData().finally(() => setTimeout(() => icon.classList.remove('fa-spin'), 500));
 }
 
 function categorizeData() {
@@ -624,476 +944,651 @@ function categorizeData() {
     store.bulan_ini = [];
     store.lebih_2_bulan = [];
     
-    rawStore.forEach(row => {
-        const estBulan = parseEstBulan(row['ESTIMASI BULAN PANEN']);
+    rawData.forEach(row => {
+        const est = parseEstBulan(row['ESTIMASI BULAN PANEN']);
         const status = String(row['STATUS']||'').trim().toUpperCase();
         
-        if (!estBulan) return;
+        if (!est) return;
         
-        const estMonthKey = monthKey(estBulan);
-        const nowMonthKey = monthKey(now);
-        const nextMonthKey = monthKey(new Date(currentYear, currentMonth + 1, 1));
+        const estKey = monthKey(est);
+        const nowKey = monthKey(now);
+        const nextKey = monthKey(new Date(currentYear, currentMonth + 1, 1));
         
         // Bulan ini/depan dengan status Tervalidasi
-        if ((estMonthKey === nowMonthKey || estMonthKey === nextMonthKey) && status === 'TERVALIDASI') {
+        if ((estKey === nowKey || estKey === nextKey) && status === 'TERVALIDASI') {
             store.bulan_ini.push(row);
         }
-        // Lebih dari 2 bulan (semua status, untuk budidaya)
-        else if (estBulan >= twoMonthsLater) {
+        // Lebih dari 2 bulan
+        else if (est >= twoMonthsLater) {
             store.lebih_2_bulan.push(row);
         }
     });
 }
 
-function refreshData() {
-    const ico=document.getElementById('ico-ref'); ico.classList.add('fa-spin');
-    loadData().finally(()=>setTimeout(()=>ico.classList.remove('fa-spin'),500));
-}
-
 // ============================================
-// FILTER & SORT
+// FILTERS
 // ============================================
-function filtered() {
-    let d=store[curTab]||[];
-    if (qSearch){ const q=qSearch.toLowerCase(); d=d.filter(r=>Object.values(r).some(v=>String(v||'').toLowerCase().includes(q))); }
-    if (fKondisi) d=d.filter(r=>String(r['KONDISI']||'').toUpperCase().trim()===fKondisi.toUpperCase());
-    if (fStatus) d=d.filter(r=>String(r['STATUS']||'').toUpperCase().trim()===fStatus.toUpperCase());
-    if (fGrade) d=d.filter(r=>String(r['GRADE']||'').toUpperCase().trim()===fGrade.toUpperCase());
-    if (sCol) {
-        d=[...d].sort((a,b)=>{
-            let va=a[sCol],vb=b[sCol];
-            const na=parseFloat(String(va||'').replace(/\./g,'').replace(',','.')),nb=parseFloat(String(vb||'').replace(/\./g,'').replace(',','.'));
-            if (!isNaN(na)&&!isNaN(nb)) return sDir==='asc'?na-nb:nb-na;
-            va=String(va||'').toLowerCase(); vb=String(vb||'').toLowerCase();
-            return va<vb?(sDir==='asc'?-1:1):va>vb?(sDir==='asc'?1:-1):0;
+function getFilteredData() {
+    let data = store[currentTab] || [];
+    
+    if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        data = data.filter(row => Object.values(row).some(v => String(v||'').toLowerCase().includes(q)));
+    }
+    if (filterKondisi) {
+        data = data.filter(row => String(row['KONDISI']||'').toUpperCase().trim() === filterKondisi.toUpperCase());
+    }
+    if (filterStatus) {
+        data = data.filter(row => String(row['STATUS']||'').toUpperCase().trim() === filterStatus.toUpperCase());
+    }
+    if (filterGrade) {
+        data = data.filter(row => String(row['GRADE']||'').toUpperCase().trim() === filterGrade.toUpperCase());
+    }
+    
+    if (sortCol) {
+        data = [...data].sort((a, b) => {
+            let va = a[sortCol], vb = b[sortCol];
+            const na = parseFloat(String(va||'').replace(/\./g,'').replace(',','.'));
+            const nb = parseFloat(String(vb||'').replace(/\./g,'').replace(',','.'));
+            if (!isNaN(na) && !isNaN(nb)) return sortDir === 'asc' ? na - nb : nb - na;
+            va = String(va||'').toLowerCase();
+            vb = String(vb||'').toLowerCase();
+            return va < vb ? (sortDir === 'asc' ? -1 : 1) : va > vb ? (sortDir === 'asc' ? 1 : -1) : 0;
         });
     }
-    return d;
+    
+    return data;
 }
 
-function fillFilters() {
-    const ks=new Set(),ss=new Set(),gs=new Set();
-    Object.values(store).forEach(rows=>rows.forEach(r=>{
-        const k=String(r['KONDISI']||'').trim(),s=String(r['STATUS']||'').trim(),g=String(r['GRADE']||'').trim();
-        if(k)ks.add(k); if(s)ss.add(s); if(g)gs.add(g);
+function populateFilters() {
+    const kondisiSet = new Set(), statusSet = new Set(), gradeSet = new Set();
+    
+    Object.values(store).forEach(rows => rows.forEach(row => {
+        const k = String(row['KONDISI']||'').trim();
+        const s = String(row['STATUS']||'').trim();
+        const g = String(row['GRADE']||'').trim();
+        if (k) kondisiSet.add(k);
+        if (s) statusSet.add(s);
+        if (g) gradeSet.add(g);
     }));
-    const selK=document.getElementById('f-kondisi'),selS=document.getElementById('f-status'),selG=document.getElementById('f-grade');
-    const pvK=fKondisi,pvS=fStatus,pvG=fGrade;
     
-    selK.innerHTML='<option value="">Semua Kondisi</option>';
-    [...ks].sort().forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;selK.appendChild(o);});
-    selK.value=pvK;
+    const selK = document.getElementById('filter-kondisi');
+    const selS = document.getElementById('filter-status');
+    const selG = document.getElementById('filter-grade');
     
-    selS.innerHTML='<option value="">Semua Status</option>';
-    [...ss].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;selS.appendChild(o);});
-    selS.value=pvS;
+    const prevK = filterKondisi, prevS = filterStatus, prevG = filterGrade;
     
-    selG.innerHTML='<option value="">Semua Grade</option>';
-    [...gs].sort().forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;selG.appendChild(o);});
-    selG.value=pvG;
+    selK.innerHTML = '<option value="">Kondisi</option>';
+    [...kondisiSet].sort().forEach(k => { selK.innerHTML += `<option value="${k}">${k}</option>`; });
+    selK.value = prevK;
+    
+    selS.innerHTML = '<option value="">Status</option>';
+    [...statusSet].sort().forEach(s => { selS.innerHTML += `<option value="${s}">${s}</option>`; });
+    selS.value = prevS;
+    
+    selG.innerHTML = '<option value="">Grade</option>';
+    [...gradeSet].sort().forEach(g => { selG.innerHTML += `<option value="${g}">${g}</option>`; });
+    selG.value = prevG;
 }
 
 // ============================================
-// RENDER DATA TABLE
+// RENDER DATA
 // ============================================
-function render() {
-    const data=filtered(), thead=document.getElementById('t-head'), tbody=document.getElementById('t-body'), cnt=document.getElementById('row-cnt');
-    const total=(store[curTab]||[]).length;
-    if (!headers.length){thead.innerHTML='';tbody.innerHTML='';cnt.textContent='0 data';return;}
-    let hh='<tr>';
-    headers.forEach(c=>{
-        const is=sCol===c;
-        const arr=is?(sDir==='asc'?' <i class="fas fa-sort-up text-[10px]"></i>':' <i class="fas fa-sort-down text-[10px]"></i>'):' <i class="fas fa-sort text-[10px] opacity-25"></i>';
-        hh+=`<th class="${is?'srt':''}" onclick="doSort('${c.replace(/'/g,"\\'")}')">${c}${arr}</th>`;
-    });
-    hh+='</tr>'; thead.innerHTML=hh;
-    if (!data.length) {
-        tbody.innerHTML=`<tr><td colspan="${headers.length}" class="text-center py-12 text-gray-600"><i class="fas fa-search mr-2 opacity-50"></i>Tidak ada data cocok dengan filter</td></tr>`;
-    } else {
-        let bh='';
-        data.forEach(r=>{bh+='<tr>';headers.forEach(c=>{bh+='<td>'+cell(c,r[c])+'</td>';});bh+='</tr>';});
-        tbody.innerHTML=bh;
+function renderData() {
+    const data = getFilteredData();
+    const total = (store[currentTab] || []).length;
+    
+    document.getElementById('data-count').textContent = data.length === total 
+        ? `${total} data` 
+        : `${data.length} dari ${total}`;
+    
+    renderTable(data);
+    renderCardList(data);
+}
+
+function renderTable(data) {
+    const thead = document.getElementById('table-head');
+    const tbody = document.getElementById('table-body');
+    
+    if (!headers.length) {
+        thead.innerHTML = '';
+        tbody.innerHTML = '';
+        return;
     }
-    cnt.textContent=data.length===total?total+' data':data.length+' dari '+total+' data';
+    
+    // Header
+    let headerHtml = '<tr>';
+    headers.forEach(col => {
+        const isSorted = sortCol === col;
+        const icon = isSorted 
+            ? (sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down')
+            : 'fa-sort opacity-30';
+        headerHtml += `<th onclick="handleSort('${col}')">${col} <i class="fas ${icon} ml-1 text-[10px]"></i></th>`;
+    });
+    headerHtml += '</tr>';
+    thead.innerHTML = headerHtml;
+    
+    // Body
+    if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="${headers.length}" class="text-center py-8 text-muted-foreground">
+            <i class="fas fa-search mr-2 opacity-50"></i>Tidak ada data
+        </td></tr>`;
+    } else {
+        tbody.innerHTML = data.map(row => {
+            const cells = headers.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
+            return `<tr>${cells}</tr>`;
+        }).join('');
+    }
 }
 
-function cell(col,val) {
-    const v=String(val||'').trim();
-    if (!v) return '<span class="text-gray-700">-</span>';
-    const c=col.toUpperCase();
-    if (c==='STATUS'){const s=SS[v.toUpperCase()]||DS;return `<span class="s-badge" style="background:${s.bg};color:${s.tx}"><span class="s-dot" style="background:${s.dt}"></span>${esc(v)}</span>`;}
-    if (c==='GRADE'){const g=GS[v.toUpperCase()]||DG;return `<span class="g-badge" style="background:${g.bg};color:${g.tx}">${esc(v)}</span>`;}
-    if (c==='KONDISI'){const k=KS[v.toUpperCase()]||DK;return `<span class="s-badge" style="background:${k.bg};color:${k.tx}">${esc(v)}</span>`;}
-    if (c.includes('QTY')){const n=parseFloat(v.replace(/\./g,'').replace(',','.'));if(!isNaN(n))return `<span class="block text-right font-mono text-white">${n.toLocaleString('id-ID')}</span>`;}
-    if (c==='KODE') return `<span class="font-mono text-accent/70 text-xs">${esc(v)}</span>`;
-    if (c.includes('ESTIMASI')||c.includes('BULAN')) return `<span class="text-amber-300/70">${esc(v)}</span>`;
-    return esc(v);
+function renderCardList(data) {
+    const container = document.getElementById('card-list');
+    
+    if (!data.length) {
+        container.innerHTML = `
+            <div class="text-center py-8 text-muted-foreground">
+                <i class="fas fa-search mr-2 opacity-50"></i>Tidak ada data
+            </div>`;
+        return;
+    }
+    
+    container.innerHTML = data.map(row => `
+        <div class="mobile-card">
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
+                    <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+                </div>
+                ${renderBadge('STATUS', row['STATUS'])}
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div>
+                    <div class="text-muted-foreground text-[10px]">Kondisi</div>
+                    ${renderBadge('KONDISI', row['KONDISI'])}
+                </div>
+                <div>
+                    <div class="text-muted-foreground text-[10px]">Qty Panen</div>
+                    <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
+                </div>
+                <div>
+                    <div class="text-muted-foreground text-[10px]">Est. Bulan</div>
+                    <div class="text-amber-400/70">${escapeHtml(row['ESTIMASI BULAN PANEN']||'-')}</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
 }
 
-function stats() {
-    const d=store[curTab]||[];
-    anim('s-total',d.length);
-    const tq=d.reduce((s,r)=>{const n=parseFloat(String(r['QTY PANEN']||'').replace(/\./g,'').replace(',','.'));return s+(isNaN(n)?0:n);},0);
-    anim('s-qty',tq);
-    const td=d.reduce((s,r)=>{const n=parseFloat(String(r['TERDISTRIBUSI']||'').replace(/\./g,'').replace(',','.'));return s+(isNaN(n)?0:n);},0);
-    anim('s-dist',td);
-    let nearest=null;
-    d.forEach(r=>{const p=parseEstBulan(r['ESTIMASI BULAN PANEN']);if(p&&(!nearest||p<nearest))nearest=p;});
-    document.getElementById('s-near').textContent=nearest?MSHORT[nearest.getMonth()]+' '+nearest.getFullYear():'-';
+function renderCell(col, val) {
+    const v = String(val||'').trim();
+    if (!v) return '<span class="text-muted-foreground/50">-</span>';
+    
+    const colUpper = col.toUpperCase();
+    
+    if (colUpper === 'STATUS') return renderBadge('STATUS', v);
+    if (colUpper === 'GRADE') return renderBadge('GRADE', v);
+    if (colUpper === 'KONDISI') return renderBadge('KONDISI', v);
+    if (colUpper.includes('QTY')) {
+        const n = parseFloat(v.replace(/\./g,'').replace(',','.'));
+        if (!isNaN(n)) return `<span class="font-mono text-white">${n.toLocaleString('id-ID')}</span>`;
+    }
+    if (colUpper === 'KODE') return `<span class="font-mono text-green-400/70 text-xs">${escapeHtml(v)}</span>`;
+    if (colUpper.includes('ESTIMASI') || colUpper.includes('BULAN')) return `<span class="text-amber-400/70">${escapeHtml(v)}</span>`;
+    
+    return escapeHtml(v);
 }
 
-function doSort(col) {
-    if(sCol===col) sDir=sDir==='asc'?'desc':'asc'; else{sCol=col;sDir='asc';}
-    render();
+function renderBadge(type, val) {
+    const v = String(val||'').trim();
+    if (!v) return '<span class="text-muted-foreground/50">-</span>';
+    
+    let style;
+    if (type === 'STATUS') style = STATUS_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
+    else if (type === 'GRADE') style = GRADE_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
+    else style = KONDISI_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
+    
+    return `<span class="badge" style="background:${style.bg};color:${style.color}">${escapeHtml(v)}</span>`;
 }
 
 // ============================================
-// MAIN TABS
+// STATS
 // ============================================
-function switchTab(t,el) {
-    curTab=t; sCol=null; sDir='asc';
-    document.querySelectorAll('#tab-wrap .tab-b').forEach(b=>b.classList.remove('on'));
-    el.classList.add('on');
-    updTabInd();
-    const isR=t==='resume';
-    document.getElementById('data-area').classList.toggle('hidden',isR);
-    document.getElementById('stats-area').classList.toggle('hidden',isR);
-    document.getElementById('v-resume').classList.toggle('hidden',!isR);
-    if (isR) { computeResume(); renderResume(); }
-    else { render(); stats(); }
+function updateStats() {
+    const data = store[currentTab] || [];
+    
+    animateNumber('stat-total', data.length);
+    
+    const totalQty = data.reduce((sum, row) => {
+        const n = parseFloat(String(row['QTY PANEN']||'').replace(/\./g,'').replace(',','.'));
+        return sum + (isNaN(n) ? 0 : n);
+    }, 0);
+    animateNumber('stat-qty', totalQty);
+    
+    const totalDist = data.reduce((sum, row) => {
+        const n = parseFloat(String(row['TERDISTRIBUSI']||'').replace(/\./g,'').replace(',','.'));
+        return sum + (isNaN(n) ? 0 : n);
+    }, 0);
+    animateNumber('stat-dist', totalDist);
+    
+    let nearest = null;
+    data.forEach(row => {
+        const d = parseEstBulan(row['ESTIMASI BULAN PANEN']);
+        if (d && (!nearest || d < nearest)) nearest = d;
+    });
+    document.getElementById('stat-near').textContent = nearest ? MONTH_SHORT[nearest.getMonth()] + ' ' + nearest.getFullYear() : '-';
 }
 
-function updTabInd() {
-    const wrap=document.getElementById('tab-wrap'),ind=document.getElementById('tab-ind'),ab=wrap.querySelector('.tab-b.on');
-    if(!ab) return;
-    const wr=wrap.getBoundingClientRect(),ar=ab.getBoundingClientRect();
-    ind.style.left=(ar.left-wr.left)+'px';
-    ind.style.width=ar.width+'px';
+function animateNumber(id, target) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (target === 0) { el.textContent = '0'; return; }
+    
+    const duration = 600;
+    const start = performance.now();
+    const isFloat = !Number.isInteger(target);
+    
+    function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = isFloat ? target * eased : Math.floor(target * eased);
+        el.textContent = current.toLocaleString('id-ID');
+        if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
 }
 
 // ============================================
-// RESUME — COMPUTE
+// TABS
+// ============================================
+function switchTab(tab, el) {
+    currentTab = tab;
+    sortCol = null;
+    sortDir = 'asc';
+    
+    // Update tab triggers
+    document.querySelectorAll('.tabs-list .tab-trigger').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
+    
+    if (el) el.classList.add('active');
+    const navItem = document.querySelector(`.nav-item[data-nav="${tab}"]`);
+    if (navItem) navItem.classList.add('active');
+    
+    // Show/hide sections
+    const isResume = tab === 'resume';
+    document.getElementById('data-section').classList.toggle('hidden', isResume);
+    document.getElementById('stats-section').classList.toggle('hidden', isResume);
+    document.getElementById('resume-section').classList.toggle('hidden', !isResume);
+    
+    if (isResume) {
+        computeResume();
+        renderResume();
+    } else {
+        renderData();
+        updateStats();
+    }
+}
+
+function switchResumeTab(tab, el) {
+    currentResumeTab = tab;
+    
+    document.querySelectorAll('#resume-section .tab-trigger').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    
+    document.getElementById('resume-bulanan').classList.toggle('hidden', tab !== 'bulanan');
+    document.getElementById('resume-proyeksi').classList.toggle('hidden', tab !== 'proyeksi');
+    
+    renderResume();
+}
+
+// ============================================
+// RESUME
 // ============================================
 function getAllData() {
-    return user.role==='budidaya' ? [...store.bulan_ini,...store.lebih_2_bulan] : [...store.bulan_ini];
+    return user.role === 'budidaya' 
+        ? [...store.bulan_ini, ...store.lebih_2_bulan] 
+        : [...store.bulan_ini];
 }
 
 function computeResume() {
     const data = getAllData();
-    resumeGrouped = {};
+    resumeData = {};
+    
     data.forEach(row => {
         const d = parseEstBulan(row['ESTIMASI BULAN PANEN']);
         if (!d) return;
+        
         const k = monthKey(d);
-        if (!resumeGrouped[k]) {
-            resumeGrouped[k] = { date:d, label:monthLabel(d), full:monthFull(d), total:0, seedling:0, remaja:0, dewasa:0, lainnya:0, items:[] };
+        if (!resumeData[k]) {
+            resumeData[k] = { date: d, label: monthLabel(d), full: monthFull(d), total: 0, seedling: 0, remaja: 0, dewasa: 0, lainnya: 0, items: [] };
         }
-        const qty = parseFloat(String(row['QTY PANEN']||'').replace(/\./g,'').replace(',','.'))||0;
-        const nk = normKondisi(row['KONDISI']);
-        resumeGrouped[k].total += qty;
-        resumeGrouped[k][nk] += qty;
-        resumeGrouped[k].items.push(row);
+        
+        const qty = parseFloat(String(row['QTY PANEN']||'').replace(/\./g,'').replace(',','.')) || 0;
+        const kondisi = normalizeKondisi(row['KONDISI']);
+        
+        resumeData[k].total += qty;
+        resumeData[k][kondisi] += qty;
+        resumeData[k].items.push(row);
     });
-    resumeKeys = Object.keys(resumeGrouped).sort();
-    // Clamp selMonthIdx
-    if (resumeKeys.length === 0) selMonthIdx = 0;
-    else if (selMonthIdx >= resumeKeys.length) selMonthIdx = resumeKeys.length - 1;
-    // Populate dropdown
-    const sel = document.getElementById('sel-month');
-    const prevVal = sel.value;
-    sel.innerHTML = '';
-    if (resumeKeys.length === 0) {
-        sel.innerHTML = '<option value="">Tidak ada data</option>';
-    } else {
-        resumeKeys.forEach((k,i) => {
-            const o = document.createElement('option');
-            o.value = k;
-            o.textContent = resumeGrouped[k].full;
-            sel.appendChild(o);
-        });
+    
+    resumeMonths = Object.keys(resumeData).sort();
+    
+    if (resumeMonths.length === 0) selectedMonthIndex = 0;
+    else if (selectedMonthIndex >= resumeMonths.length) selectedMonthIndex = resumeMonths.length - 1;
+    
+    // Populate month dropdown
+    const sel = document.getElementById('month-select');
+    sel.innerHTML = resumeMonths.length === 0 
+        ? '<option value="">Tidak ada data</option>'
+        : resumeMonths.map((k, i) => `<option value="${k}">${resumeData[k].full}</option>`).join('');
+    
+    if (resumeMonths[selectedMonthIndex]) {
+        sel.value = resumeMonths[selectedMonthIndex];
     }
-    sel.value = (prevVal && resumeGrouped[prevVal]) ? prevVal : (resumeKeys[selMonthIdx] || '');
-    selMonthIdx = sel.selectedIndex >= 0 ? sel.selectedIndex : 0;
 }
 
-// ============================================
-// RESUME — RENDER BULANAN
-// ============================================
 function renderResume() {
-    if (curRTab === 'r_bulanan') renderBulanan();
+    if (currentResumeTab === 'bulanan') renderBulanan();
     else renderProyeksi();
-    requestAnimationFrame(updRTabInd);
 }
 
 function renderBulanan() {
-    const emptyEl = document.getElementById('r-empty');
-    const contentEls = [document.getElementById('sel-month').parentElement, document.querySelector('.rc-g'), document.getElementById('r-bars').parentElement, document.getElementById('tbl-det').parentElement.parentElement];
-
-    if (!resumeKeys.length || !resumeGrouped[resumeKeys[selMonthIdx]]) {
-        contentEls.forEach(el => el.classList.add('hidden'));
+    const emptyEl = document.getElementById('resume-empty');
+    const contentEls = [
+        document.getElementById('month-select').parentElement,
+        document.querySelector('#resume-bulanan .grid'),
+        document.querySelector('#resume-bulanan .card:not(#resume-empty)'),
+        document.getElementById('distribution-bars').parentElement
+    ];
+    
+    if (!resumeMonths.length || !resumeData[resumeMonths[selectedMonthIndex]]) {
+        contentEls.forEach(el => el && el.classList.add('hidden'));
         emptyEl.classList.remove('hidden');
         return;
     }
-    contentEls.forEach(el => el.classList.remove('hidden'));
+    
+    contentEls.forEach(el => el && el.classList.remove('hidden'));
     emptyEl.classList.add('hidden');
-
-    const g = resumeGrouped[resumeKeys[selMonthIdx]];
+    
+    const g = resumeData[resumeMonths[selectedMonthIndex]];
     const t = Math.max(g.total, 1);
-
+    
     // Cards
-    anim('rc-total', g.total);
-    document.getElementById('rc-sub').textContent = 'akan panen di ' + g.full;
-    anim('rc-seed', g.seedling);
-    document.getElementById('rc-seed-p').textContent = pct(g.seedling, t) + ' dari total';
-    anim('rc-rem', g.remaja);
-    document.getElementById('rc-rem-p').textContent = pct(g.remaja, t) + ' dari total';
-    anim('rc-dew', g.dewasa);
-    document.getElementById('rc-dew-p').textContent = pct(g.dewasa, t) + ' dari total';
-    document.getElementById('r-month-cnt').textContent = g.items.length + ' produk';
-
-    // Bars
-    const barsEl = document.getElementById('r-bars');
-    let bh = '';
-    ['seedling','remaja','dewasa','lainnya'].forEach(k => {
+    animateNumber('resume-total', g.total);
+    document.getElementById('resume-sub').textContent = `akan panen di ${g.full}`;
+    animateNumber('resume-seed', g.seedling);
+    animateNumber('resume-rem', g.remaja);
+    animateNumber('resume-dew', g.dewasa);
+    
+    // Distribution bars
+    const barsEl = document.getElementById('distribution-bars');
+    barsEl.innerHTML = ['seedling', 'remaja', 'dewasa', 'lainnya'].map(k => {
         const v = g[k];
-        if (k === 'lainnya' && v === 0) return;
-        const c = KC[k];
-        const p = (v / t * 100).toFixed(1);
-        bh += `<div class="flex items-center gap-3">
-            <span class="w-20 text-xs text-gray-400 flex-shrink-0">${c.label}</span>
-            <div class="flex-1 bar-track"><div class="bar-fill" style="width:${p}%;background:${c.bar}"></div></div>
-            <span class="w-16 text-right text-sm font-mono font-semibold" style="color:${c.tx}">${v.toLocaleString('id-ID')}</span>
-            <span class="w-14 text-right text-xs text-gray-600">${p}%</span>
-        </div>`;
-    });
-    barsEl.innerHTML = bh;
-
+        if (k === 'lainnya' && v === 0) return '';
+        const pct = (v / t * 100).toFixed(1);
+        return `
+            <div class="flex items-center gap-3">
+                <span class="w-16 text-[10px] text-muted-foreground uppercase">${k}</span>
+                <div class="flex-1 progress">
+                    <div class="progress-bar" style="width:${pct}%;background:${KONDISI_COLORS[k]}"></div>
+                </div>
+                <span class="w-12 text-right text-xs font-mono" style="color:${KONDISI_COLORS[k]}">${v.toLocaleString('id-ID')}</span>
+                <span class="w-10 text-right text-[10px] text-muted-foreground">${pct}%</span>
+            </div>
+        `;
+    }).join('');
+    
     // Detail table
-    const detCols = ['KODE','NAMA PRODUK','KONDISI','QTY PANEN','GRADE','ESTIMASI BULAN PANEN','STATUS'];
-    const detH = document.getElementById('td-head');
-    let dh = '<tr>';
-    detCols.forEach(c => { dh += `<th style="cursor:default">${c}</th>`; });
-    dh += '</tr>';
-    detH.innerHTML = dh;
-
-    const detB = document.getElementById('td-body');
-    document.getElementById('r-det-cnt').textContent = g.items.length + ' produk';
+    const detailCols = ['KODE','NAMA PRODUK','KONDISI','QTY PANEN','GRADE','ESTIMASI BULAN PANEN','STATUS'];
+    const detailHead = document.getElementById('detail-head');
+    const detailBody = document.getElementById('detail-body');
+    
+    detailHead.innerHTML = `<tr>${detailCols.map(c => `<th style="cursor:default">${c}</th>`).join('')}</tr>`;
+    document.getElementById('detail-count').textContent = `${g.items.length} produk`;
+    
     if (!g.items.length) {
-        detB.innerHTML = `<tr><td colspan="${detCols.length}" class="text-center py-8 text-gray-600">-</td></tr>`;
+        detailBody.innerHTML = `<tr><td colspan="${detailCols.length}" class="text-center py-4 text-muted-foreground">-</td></tr>`;
     } else {
-        let db = '';
-        g.items.forEach(r => {
-            db += '<tr>';
-            detCols.forEach(c => { db += '<td>' + cell(c, r[c]) + '</td>'; });
-            db += '</tr>';
-        });
-        detB.innerHTML = db;
+        detailBody.innerHTML = g.items.map(row => {
+            const cells = detailCols.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
+            return `<tr>${cells}</tr>`;
+        }).join('');
     }
 }
 
-function navMonth(dir) {
-    if (!resumeKeys.length) return;
-    selMonthIdx = Math.max(0, Math.min(resumeKeys.length - 1, selMonthIdx + dir));
-    document.getElementById('sel-month').selectedIndex = selMonthIdx;
+function navigateMonth(dir) {
+    if (!resumeMonths.length) return;
+    selectedMonthIndex = Math.max(0, Math.min(resumeMonths.length - 1, selectedMonthIndex + dir));
+    document.getElementById('month-select').selectedIndex = selectedMonthIndex;
     renderBulanan();
 }
 
-function onMonthSel(val) {
-    selMonthIdx = resumeKeys.indexOf(val);
-    if (selMonthIdx < 0) selMonthIdx = 0;
-    renderBulanan();
-}
-
-// ============================================
-// RESUME — RENDER PROYEKSI
-// ============================================
 function renderProyeksi() {
     const data = getAllData();
     const now = new Date();
     const months = [];
+    
     for (let i = 2; i <= 4; i++) {
         const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
-        months.push({ key:monthKey(d), label:monthFull(d), short:monthLabel(d), total:0, seedling:0, remaja:0, dewasa:0, lainnya:0 });
+        months.push({ key: monthKey(d), label: monthFull(d), total: 0, seedling: 0, remaja: 0, dewasa: 0 });
     }
-
+    
     data.forEach(row => {
         const d = parseEstBulan(row['ESTIMASI BULAN PANEN']);
         if (!d) return;
-        const k = monthKey(d);
-        const m = months.find(m => m.key === k);
+        
+        const m = months.find(m => m.key === monthKey(d));
         if (!m) return;
-        const qty = parseFloat(String(row['QTY PANEN']||'').replace(/\./g,'').replace(',','.'))||0;
-        const nk = normKondisi(row['KONDISI']);
+        
+        const qty = parseFloat(String(row['QTY PANEN']||'').replace(/\./g,'').replace(',','.')) || 0;
         m.total += qty;
-        m[nk] += qty;
+        m[normalizeKondisi(row['KONDISI'])] += qty;
     });
-
-    const maxTotal = Math.max(1, ...months.map(m => m.total));
-    const tbody = document.getElementById('tp-body');
-    const emptyEl = document.getElementById('p-empty');
+    
+    const tbody = document.getElementById('proyeksi-body');
+    const emptyEl = document.getElementById('proyeksi-empty');
+    const tableContainer = tbody.closest('.card');
     const hasData = months.some(m => m.total > 0);
-
+    
     if (!hasData) {
         tbody.innerHTML = '';
         emptyEl.classList.remove('hidden');
-        tbody.parentElement.parentElement.classList.add('hidden');
+        tableContainer.classList.add('hidden');
         return;
     }
+    
     emptyEl.classList.add('hidden');
-    tbody.parentElement.parentElement.classList.remove('hidden');
-
-    let bh = '';
-    months.forEach((m, idx) => {
-        const t = Math.max(m.total, 1);
+    tableContainer.classList.remove('hidden');
+    
+    const maxTotal = Math.max(1, ...months.map(m => m.total));
+    
+    tbody.innerHTML = months.map((m, idx) => {
         const isMax = m.total === maxTotal && m.total > 0;
-        bh += `<tr class="pj-row${isMax?' bg-accent/[.03]':''}">`;
-        bh += `<td><div class="flex items-center gap-2"><span class="w-6 h-6 rounded-md text-xs font-bold flex items-center justify-center ${isMax?'bg-accent/15 text-accent':'bg-base-700 text-gray-500'}">+${idx+2}</span><span class="font-medium text-white">${m.label}</span></div></td>`;
-        bh += `<td class="text-right"><span class="font-mono font-bold text-white text-lg">${m.total.toLocaleString('id-ID')}</span></td>`;
-        bh += `<td class="text-right"><span class="font-mono" style="color:${KC.seedling.tx}">${m.seedling.toLocaleString('id-ID')}</span></td>`;
-        bh += `<td class="text-right"><span class="font-mono" style="color:${KC.remaja.tx}">${m.remaja.toLocaleString('id-ID')}</span></td>`;
-        bh += `<td class="text-right"><span class="font-mono" style="color:${KC.dewasa.tx}">${m.dewasa.toLocaleString('id-ID')}</span></td>`;
-        // Mini distribution bar
-        bh += `<td><div class="flex h-4 rounded-full overflow-hidden bg-base-700">`;
-        if (m.total > 0) {
-            const ps = (m.seedling/t*100), pr = (m.remaja/t*100), pd = (m.dewasa/t*100);
-            if (ps > 0) bh += `<div style="width:${ps}%;background:${KC.seedling.bar}" title="Seedling ${ps.toFixed(1)}%"></div>`;
-            if (pr > 0) bh += `<div style="width:${pr}%;background:${KC.remaja.bar}" title="Remaja ${pr.toFixed(1)}%"></div>`;
-            if (pd > 0) bh += `<div style="width:${pd}%;background:${KC.dewasa.bar}" title="Dewasa ${pd.toFixed(1)}%"></div>`;
-        }
-        bh += `</div></td>`;
-        bh += '</tr>';
-    });
-    tbody.innerHTML = bh;
+        return `
+            <tr class="${isMax ? 'bg-green-500/5' : ''}">
+                <td>
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center ${isMax ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-muted-foreground'}">+${idx+2}</span>
+                        <span class="font-medium text-white">${m.label}</span>
+                    </div>
+                </td>
+                <td class="text-right font-mono font-bold text-white">${m.total.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-green-400">${m.seedling.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-blue-400">${m.remaja.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-amber-400">${m.dewasa.toLocaleString('id-ID')}</td>
+            </tr>
+        `;
+    }).join('');
 }
 
 // ============================================
-// RESUME SUB-TABS
+// UI HELPERS
 // ============================================
-function switchRTab(t, el) {
-    curRTab = t;
-    document.querySelectorAll('#rtab-wrap .tab-b').forEach(b => b.classList.remove('on'));
-    el.classList.add('on');
-    updRTabInd();
-    document.getElementById('v-rbulanan').classList.toggle('hidden', t !== 'r_bulanan');
-    document.getElementById('v-proyeksi').classList.toggle('hidden', t !== 'r_proyeksi');
-    renderResume();
+function showLoading(show) {
+    document.getElementById('loading-state').classList.toggle('hidden', !show);
+    document.getElementById('table-container').classList.toggle('hidden', show);
+    document.getElementById('card-list').classList.toggle('hidden', show);
+    document.getElementById('error-state').classList.add('hidden');
 }
 
-function updRTabInd() {
-    const wrap=document.getElementById('rtab-wrap'),ind=document.getElementById('rtab-ind'),ab=wrap.querySelector('.tab-b.on');
-    if(!ab) return;
-    const wr=wrap.getBoundingClientRect(),ar=ab.getBoundingClientRect();
-    ind.style.left=(ar.left-wr.left)+'px';
-    ind.style.width=ar.width+'px';
+function showError(msg) {
+    document.getElementById('loading-state').classList.add('hidden');
+    document.getElementById('table-container').classList.add('hidden');
+    document.getElementById('card-list').classList.add('hidden');
+    document.getElementById('error-state').classList.remove('hidden');
+    document.getElementById('error-message').textContent = msg;
 }
 
-// ============================================
-// STATES
-// ============================================
-function setLoad(on) {
-    document.getElementById('v-load').classList.toggle('hidden',!on);
-    document.getElementById('tbl-wrap').classList.toggle('hidden',on);
-    document.getElementById('v-err').classList.add('hidden');
+function showToast(msg, type = 'info') {
+    const styles = {
+        success: { bg: 'rgba(34,197,94,0.15)', border: 'rgba(34,197,94,0.3)', color: '#4ade80', icon: 'fa-check-circle' },
+        error: { bg: 'rgba(239,68,68,0.15)', border: 'rgba(239,68,68,0.3)', color: '#f87171', icon: 'fa-times-circle' },
+        warning: { bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.3)', color: '#fbbf24', icon: 'fa-exclamation-circle' },
+        info: { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.3)', color: '#60a5fa', icon: 'fa-info-circle' }
+    };
+    const s = styles[type] || styles.info;
+    
+    const el = document.createElement('div');
+    el.className = 'toast flex items-center gap-2 px-4 py-3 rounded-lg text-sm backdrop-blur-md';
+    el.style.cssText = `background:${s.bg};border:1px solid ${s.border};color:${s.color};min-width:200px;`;
+    el.innerHTML = `<i class="fas ${s.icon}"></i><span>${escapeHtml(msg)}</span>`;
+    
+    document.getElementById('toast-container').appendChild(el);
+    setTimeout(() => {
+        el.classList.add('hide');
+        el.addEventListener('animationend', () => el.remove());
+    }, 3000);
 }
-function setErr(msg) {
-    document.getElementById('v-load').classList.add('hidden');
-    document.getElementById('tbl-wrap').classList.add('hidden');
-    document.getElementById('v-err').classList.remove('hidden');
-    document.getElementById('err-msg').textContent=msg;
+
+function handleSort(col) {
+    if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortCol = col; sortDir = 'asc'; }
+    renderData();
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function formatNumber(val) {
+    const n = parseFloat(String(val||'').replace(/\./g,'').replace(',','.'));
+    return isNaN(n) ? '-' : n.toLocaleString('id-ID');
 }
 
 // ============================================
 // EXPORT CSV
 // ============================================
 function exportCSV() {
-    const d=filtered();
-    if(!d.length){toast('Tidak ada data untuk di-export','warning');return;}
-    let csv=headers.join(',')+'\n';
-    d.forEach(r=>{csv+=headers.map(h=>{let v=String(r[h]||'');if(v.includes(',')||v.includes('"')||v.includes('\n'))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(',')+'\n';});
-    const b=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(b);
-    a.download=`data_akan_panen_${curTab}_${new Date().toISOString().slice(0,10)}.csv`;
-    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);
-    toast(d.length+' data di-export','success');
+    const data = getFilteredData();
+    if (!data.length) {
+        showToast('Tidak ada data untuk di-export', 'warning');
+        return;
+    }
+    
+    let csv = headers.join(',') + '\n';
+    data.forEach(row => {
+        csv += headers.map(h => {
+            let v = String(row[h]||'');
+            if (v.includes(',') || v.includes('"') || v.includes('\n')) {
+                v = '"' + v.replace(/"/g, '""') + '"';
+            }
+            return v;
+        }).join(',') + '\n';
+    });
+    
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `data_akan_panen_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast(`${data.length} data di-export`, 'success');
 }
 
 // ============================================
-// TOAST
-// ============================================
-function toast(msg,type='info') {
-    const c={success:{bg:'rgba(16,185,129,.15)',bd:'rgba(16,185,129,.3)',tx:'#34D399',ic:'fa-check-circle'},error:{bg:'rgba(239,68,68,.15)',bd:'rgba(239,68,68,.3)',tx:'#F87171',ic:'fa-times-circle'},warning:{bg:'rgba(245,158,11,.15)',bd:'rgba(245,158,11,.3)',tx:'#FBBF24',ic:'fa-exclamation-circle'},info:{bg:'rgba(59,130,246,.15)',bd:'rgba(59,130,246,.3)',tx:'#60A5FA',ic:'fa-info-circle'}}[type]||{bg:'rgba(59,130,246,.15)',bd:'rgba(59,130,246,.3)',tx:'#60A5FA',ic:'fa-info-circle'};
-    const el=document.createElement('div');
-    el.className='toast flex items-center gap-2 px-4 py-3 rounded-lg text-sm backdrop-blur-md';
-    el.style.cssText=`background:${c.bg};border:1px solid ${c.bd};color:${c.tx};min-width:240px`;
-    el.innerHTML=`<i class="fas ${c.ic}"></i><span>${esc(msg)}</span>`;
-    document.getElementById('toasts').appendChild(el);
-    setTimeout(()=>{el.classList.add('out');el.addEventListener('animationend',()=>el.remove());},3000);
-}
-
-// ============================================
-// UTILS
-// ============================================
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function pct(v,t){return t>0?(v/t*100).toFixed(1)+'%':'0%';}
-
-function anim(id,target,dur=600) {
-    const el=document.getElementById(id);if(!el)return;
-    if(target===0){el.textContent='0';return;}
-    const st=performance.now(),fl=!Number.isInteger(target);
-    (function up(now){
-        const p=Math.min((now-st)/dur,1),e=1-Math.pow(1-p,3);
-        el.textContent=fl?(target*e).toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,'.'):Math.floor(target*e).toLocaleString('id-ID');
-        if(p<1)requestAnimationFrame(up);
-    })(st);
-}
-
-// ============================================
-// EVENTS
+// EVENT LISTENERS
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    if (API_URL.includes('YOUR_DEPLOYMENT_ID')) document.getElementById('cfg-warn').style.display='';
-
+    // Login form
+    document.getElementById('login-form').addEventListener('submit', handleLogin);
+    
     // Toggle password
-    document.getElementById('btn-pw').addEventListener('click',()=>{
-        const i=document.getElementById('i-pass'),ic=document.querySelector('#btn-pw i');
-        if(i.type==='password'){i.type='text';ic.classList.replace('fa-eye','fa-eye-slash');}
-        else{i.type='password';ic.classList.replace('fa-eye-slash','fa-eye');}
+    document.getElementById('toggle-pass').addEventListener('click', () => {
+        const input = document.getElementById('input-pass');
+        const icon = document.querySelector('#toggle-pass i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
     });
-
-    // Submit login
-    document.getElementById('frm-login').addEventListener('submit',e=>{e.preventDefault();doLogin();});
-
-    // Search debounced
-    let st;
-    document.getElementById('i-search').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{qSearch=e.target.value;render();},180);});
-
+    
+    // Search with debounce
+    let searchTimeout;
+    document.getElementById('search-input').addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            searchQuery = e.target.value;
+            renderData();
+        }, 180);
+    });
+    
     // Filters
-    document.getElementById('f-kondisi').addEventListener('change',e=>{fKondisi=e.target.value;render();});
-    document.getElementById('f-status').addEventListener('change',e=>{fStatus=e.target.value;render();});
-    document.getElementById('f-grade').addEventListener('change',e=>{fGrade=e.target.value;render();});
-
-    // Keyboard
-    document.addEventListener('keydown',e=>{
-        if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();const si=document.getElementById('i-search');if(si&&!document.getElementById('v-dash').classList.contains('hidden')&&curTab!=='resume'){si.focus();si.select();}}
-        if(e.key==='Escape'&&document.activeElement===document.getElementById('i-search')){document.getElementById('i-search').value='';qSearch='';render();document.getElementById('i-search').blur();}
-        if(e.key==='Enter'&&!document.getElementById('v-login').classList.contains('hidden')){const a=document.activeElement;if(a.id==='i-user'||a.id==='i-pass')doLogin();}
-        // Arrow keys for month nav in resume
-        if(curTab==='resume'&&curRTab==='r_bulanan'&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='SELECT'){
-            if(e.key==='ArrowLeft')navMonth(-1);
-            if(e.key==='ArrowRight')navMonth(1);
+    document.getElementById('filter-kondisi').addEventListener('change', (e) => {
+        filterKondisi = e.target.value;
+        renderData();
+    });
+    document.getElementById('filter-status').addEventListener('change', (e) => {
+        filterStatus = e.target.value;
+        renderData();
+    });
+    document.getElementById('filter-grade').addEventListener('change', (e) => {
+        filterGrade = e.target.value;
+        renderData();
+    });
+    
+    // Month select
+    document.getElementById('month-select').addEventListener('change', (e) => {
+        selectedMonthIndex = resumeMonths.indexOf(e.target.value);
+        if (selectedMonthIndex < 0) selectedMonthIndex = 0;
+        renderBulanan();
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+K to focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.getElementById('search-input');
+            if (!document.getElementById('dashboard-view').classList.contains('hidden') && currentTab !== 'resume') {
+                searchInput.focus();
+                searchInput.select();
+            }
+        }
+        // Escape to clear search
+        if (e.key === 'Escape' && document.activeElement === document.getElementById('search-input')) {
+            document.getElementById('search-input').value = '';
+            searchQuery = '';
+            renderData();
+            document.getElementById('search-input').blur();
+        }
+        // Arrow keys for month navigation in resume
+        if (currentTab === 'resume' && currentResumeTab === 'bulanan' && 
+            !['INPUT', 'SELECT'].includes(document.activeElement.tagName)) {
+            if (e.key === 'ArrowLeft') navigateMonth(-1);
+            if (e.key === 'ArrowRight') navigateMonth(1);
         }
     });
-
-    // Resize
-    window.addEventListener('resize',()=>{
-        if(!document.getElementById('v-dash').classList.contains('hidden')){
-            updTabInd();
-            if(curTab==='resume')updRTabInd();
-        }
-    });
-
-    // Init
-    checkSess();
+    
+    // Check session
+    checkSession();
 });
 </script>
 </body>
