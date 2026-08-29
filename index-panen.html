@@ -13,16 +13,16 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        background: 'hsl(222.2 84% 4.9%)',
-                        foreground: 'hsl(210 40% 98%)',
-                        card: { DEFAULT: 'hsl(222.2 84% 4.9%)', foreground: 'hsl(210 40% 98%)' },
-                        popover: { DEFAULT: 'hsl(222.2 84% 4.9%)', foreground: 'hsl(210 40% 98%)' },
+                        background: 'hsl(0 0% 98%)',
+                        foreground: 'hsl(222.2 84% 4.9%)',
+                        card: { DEFAULT: 'hsl(0 0% 100%)', foreground: 'hsl(222.2 84% 4.9%)' },
+                        popover: { DEFAULT: 'hsl(0 0% 100%)', foreground: 'hsl(222.2 84% 4.9%)' },
                         primary: { DEFAULT: 'hsl(142.1 76.2% 36.3%)', foreground: 'hsl(355.7 100% 97.3%)' },
-                        secondary: { DEFAULT: 'hsl(217.2 32.6% 17.5%)', foreground: 'hsl(210 40% 98%)' },
-                        muted: { DEFAULT: 'hsl(217.2 32.6% 17.5%)', foreground: 'hsl(215 20.2% 65.1%)' },
+                        secondary: { DEFAULT: 'hsl(210 40% 96%)', foreground: 'hsl(222.2 84% 4.9%)' },
+                        muted: { DEFAULT: 'hsl(210 40% 96%)', foreground: 'hsl(215 16.3% 46.9%)' },
                         accent: { DEFAULT: 'hsl(142.1 76.2% 36.3%)', foreground: 'hsl(210 40% 98%)' },
-                        destructive: { DEFAULT: 'hsl(0 62.8% 30.6%)', foreground: 'hsl(210 40% 98%)' },
-                        border: 'hsl(217.2 32.6% 17.5%)',
+                        destructive: { DEFAULT: 'hsl(0 84.2% 60.2%)', foreground: 'hsl(210 40% 98%)' },
+                        border: 'hsl(214.3 31.8% 91.4%)',
                         ring: 'hsl(142.4 71.8% 45.4%)',
                     }
                 }
@@ -34,64 +34,38 @@
         html, body { 
             margin: 0; padding: 0; 
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, hsl(222.2 84% 2%) 0%, hsl(222.2 84% 6%) 50%, hsl(222.2 84% 3%) 100%);
+            background: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(210 40% 98%) 50%, hsl(0 0% 96%) 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Glassmorphism Base */
         .glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
         .glass-strong {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        /* Animated Background Blobs */
-        .blob-container {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            animation: float 20s ease-in-out infinite;
-        }
-        .blob-1 { width: 400px; height: 400px; background: hsl(142.1 76.2% 36.3%); top: -10%; right: -5%; animation-delay: 0s; }
-        .blob-2 { width: 300px; height: 300px; background: hsl(217.2 91.2% 59.8%); bottom: -5%; left: -5%; animation-delay: -7s; }
-        .blob-3 { width: 200px; height: 200px; background: hsl(262.1 83.3% 58.8%); top: 40%; left: 30%; animation-delay: -14s; }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -50px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.9); }
-            75% { transform: translate(40px, 30px) scale(1.05); }
-        }
+        .blob-container { display: none; }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
 
-        /* Shadcn-style Input */
         .input {
             width: 100%;
             padding: 0.625rem 0.875rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 0.5rem;
-            color: hsl(210 40% 98%);
+            color: hsl(222.2 84% 4.9%);
             font-size: 0.875rem;
             transition: all 0.2s;
             outline: none;
@@ -100,7 +74,7 @@
             border-color: hsl(142.4 71.8% 45.4%);
             box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
         }
-        .input::placeholder { color: hsl(215 20.2% 55.1%); }
+        .input::placeholder { color: hsl(215 16.3% 56.9%); }
 
         /* Shadcn-style Button */
         .btn {
@@ -130,23 +104,22 @@
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-ghost {
             background: transparent;
-            color: hsl(215 20.2% 75.1%);
+            color: hsl(215 16.3% 46.9%);
         }
-        .btn-ghost:hover { background: rgba(255,255,255,0.05); color: white; }
+        .btn-ghost:hover { background: rgba(0,0,0,0.05); color: hsl(222.2 84% 4.9%); }
         .btn-outline {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: hsl(215 20.2% 75.1%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
+            color: hsl(215 16.3% 46.9%);
         }
-        .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+        .btn-outline:hover { background: rgba(0,0,0,0.03); border-color: hsl(214.3 31.8% 81.4%); }
 
-        /* Shadcn-style Select */
         .select {
             padding: 0.5rem 2rem 0.5rem 0.75rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 0.5rem;
-            color: hsl(210 40% 98%);
+            color: hsl(222.2 84% 4.9%);
             font-size: 0.8125rem;
             appearance: none;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
@@ -173,29 +146,27 @@
             white-space: nowrap;
         }
 
-        /* Shadcn-style Card */
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 0.75rem;
             overflow: hidden;
         }
         .card-header {
             padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid hsl(214.3 31.8% 91.4%);
         }
         .card-content { padding: 1rem; }
         .card-footer {
             padding: 0.75rem 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid hsl(214.3 31.8% 91.4%);
         }
 
-        /* Shadcn-style Tabs */
         .tabs-list {
             display: flex;
             gap: 0.25rem;
             padding: 0.25rem;
-            background: rgba(255, 255, 255, 0.03);
+            background: hsl(210 40% 96%);
             border-radius: 0.5rem;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -205,7 +176,7 @@
             padding: 0.5rem 0.875rem;
             font-size: 0.8125rem;
             font-weight: 500;
-            color: hsl(215 20.2% 65.1%);
+            color: hsl(215 16.3% 46.9%);
             background: transparent;
             border: none;
             border-radius: 0.375rem;
@@ -213,13 +184,12 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
-        .tab-trigger:hover { color: hsl(210 40% 98%); }
+        .tab-trigger:hover { color: hsl(222.2 84% 4.9%); }
         .tab-trigger.active {
             background: rgba(34, 197, 94, 0.15);
-            color: hsl(142.4 71.8% 55.4%);
+            color: hsl(142.1 76.2% 36.3%);
         }
 
-        /* Shadcn-style Table */
         .data-table { width: 100%; border-collapse: collapse; }
         .data-table th {
             padding: 0.75rem 1rem;
@@ -227,24 +197,23 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: hsl(215 20.2% 55.1%);
+            color: hsl(215 16.3% 46.9%);
             text-align: left;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: hsl(210 40% 98%);
+            border-bottom: 1px solid hsl(214.3 31.8% 91.4%);
             cursor: pointer;
             user-select: none;
         }
-        .data-table th:hover { color: hsl(210 40% 98%); }
+        .data-table th:hover { color: hsl(222.2 84% 4.9%); }
         .data-table td {
             padding: 0.75rem 1rem;
             font-size: 0.8125rem;
-            color: hsl(215 16.3% 80%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: hsl(222.2 47.4% 11.2%);
+            border-bottom: 1px solid hsl(214.3 31.8% 91.4%);
         }
         .data-table tbody tr { transition: background 0.15s; }
-        .data-table tbody tr:hover { background: rgba(34, 197, 94, 0.03); }
+        .data-table tbody tr:hover { background: rgba(34, 197, 94, 0.05); }
 
-        /* Shadcn-style Avatar */
         .avatar {
             display: flex;
             align-items: center;
@@ -253,17 +222,16 @@
             height: 2.25rem;
             border-radius: 50%;
             background: rgba(34, 197, 94, 0.15);
-            color: hsl(142.4 71.8% 55.4%);
+            color: hsl(142.1 76.2% 36.3%);
             font-size: 0.875rem;
             font-weight: 600;
         }
 
-        /* Stat Card */
         .stat-card {
             position: relative;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 0.75rem;
             overflow: hidden;
         }
@@ -275,7 +243,7 @@
             right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, hsl(142.1 76.2% 36.3%), transparent);
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
         /* Toast */
@@ -294,9 +262,8 @@
             to { opacity: 0; transform: translateX(100%); }
         }
 
-        /* Skeleton */
         .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.03) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.03) 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 0.375rem;
@@ -306,7 +273,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Fade In Animation */
         .fade-in {
             animation: fadeIn 0.4s ease;
         }
@@ -315,10 +281,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Progress Bar */
         .progress {
             height: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: hsl(214.3 31.8% 91.4%);
             border-radius: 9999px;
             overflow: hidden;
         }
@@ -328,7 +293,6 @@
             transition: width 0.6s ease;
         }
 
-        /* Mobile Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -342,10 +306,10 @@
             display: flex;
             justify-content: space-around;
             padding: 0.5rem;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 1rem;
         }
         .nav-item {
@@ -356,21 +320,20 @@
             padding: 0.5rem 0.75rem;
             font-size: 0.625rem;
             font-weight: 500;
-            color: hsl(215 20.2% 55.1%);
+            color: hsl(215 16.3% 46.9%);
             background: none;
             border: none;
             cursor: pointer;
             transition: color 0.2s;
         }
         .nav-item i { font-size: 1.125rem; }
-        .nav-item.active { color: hsl(142.4 71.8% 55.4%); }
-        .nav-item:hover { color: hsl(210 40% 98%); }
+        .nav-item.active { color: hsl(142.1 76.2% 36.3%); }
+        .nav-item:hover { color: hsl(222.2 84% 4.9%); }
 
-        /* Mobile Card List View */
         .mobile-card {
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(214.3 31.8% 91.4%);
             border-radius: 0.75rem;
             transition: all 0.2s;
         }
@@ -392,13 +355,6 @@
 </head>
 <body class="text-foreground min-h-screen">
 
-<!-- Animated Background -->
-<div class="blob-container">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-</div>
-
 <!-- Toast Container -->
 <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
@@ -408,32 +364,32 @@
         <!-- Logo -->
         <div class="text-center mb-8">
             <div class="w-14 h-14 mx-auto mb-4 rounded-xl glass flex items-center justify-center" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.2);">
-                <i class="fas fa-seedling text-xl text-green-400"></i>
+                <i class="fas fa-seedling text-xl text-green-600"></i>
             </div>
-            <h1 class="text-xl font-semibold text-white tracking-tight">Data Akan Panen</h1>
-            <p class="text-sm text-muted-foreground mt-1">Masuk untuk melihat data</p>
+            <h1 class="text-xl font-semibold text-gray-900 tracking-tight">Data Akan Panen</h1>
+            <p class="text-sm text-gray-500 mt-1">Masuk untuk melihat data</p>
         </div>
 
         <!-- Login Form -->
         <form id="login-form" class="space-y-4">
             <div class="space-y-1.5">
-                <label class="text-xs font-medium text-muted-foreground">Username</label>
+                <label class="text-xs font-medium text-gray-600">Username</label>
                 <div class="relative">
-                    <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm"></i>
+                    <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                     <input type="text" id="input-user" class="input pl-9" placeholder="Masukkan username" autocomplete="username" required>
                 </div>
             </div>
             <div class="space-y-1.5">
-                <label class="text-xs font-medium text-muted-foreground">Password</label>
+                <label class="text-xs font-medium text-gray-600">Password</label>
                 <div class="relative">
-                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm"></i>
+                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                     <input type="password" id="input-pass" class="input pl-9 pr-9" placeholder="Masukkan password" autocomplete="current-password" required>
-                    <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition">
+                    <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition">
                         <i class="fas fa-eye text-sm"></i>
                     </button>
                 </div>
             </div>
-            <div id="login-error" class="hidden p-3 rounded-lg text-sm bg-red-500/10 border border-red-500/20 text-red-400">
+            <div id="login-error" class="hidden p-3 rounded-lg text-sm bg-red-50 border border-red-200 text-red-600">
                 <i class="fas fa-exclamation-circle mr-1.5"></i>
                 <span id="login-error-text"></span>
             </div>
@@ -448,16 +404,16 @@
 <!-- ========== DASHBOARD VIEW ========== -->
 <div id="dashboard-view" class="hidden min-h-screen pb-24 sm:pb-6 relative z-10">
     <!-- Header -->
-    <header class="sticky top-0 z-40 glass-strong border-b border-white/5">
+    <header class="sticky top-0 z-40 glass-strong border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: rgba(34, 197, 94, 0.15);">
-                    <i class="fas fa-seedling text-green-400 text-sm"></i>
+                    <i class="fas fa-seedling text-green-600 text-sm"></i>
                 </div>
-                <span class="font-semibold text-white text-sm hide-mobile">Data Akan Panen</span>
+                <span class="font-semibold text-gray-900 text-sm hide-mobile">Data Akan Panen</span>
             </div>
             <div class="flex items-center gap-2">
-                <span id="user-name" class="text-sm text-muted-foreground hide-mobile"></span>
+                <span id="user-name" class="text-sm text-gray-600 hide-mobile"></span>
                 <span id="user-role" class="badge text-xs"></span>
                 <button onclick="logout()" class="btn btn-ghost p-2" title="Logout">
                     <i class="fas fa-sign-out-alt text-sm"></i>
@@ -473,31 +429,31 @@
         <div id="stats-section" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Total Produk</span>
-                    <i class="fas fa-box text-green-400/40 text-xs"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Total Produk</span>
+                    <i class="fas fa-box text-green-500/60 text-xs"></i>
                 </div>
-                <div id="stat-total" class="text-xl font-bold text-white">0</div>
+                <div id="stat-total" class="text-xl font-bold text-gray-900">0</div>
             </div>
             <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Qty Panen</span>
-                    <i class="fas fa-cubes text-blue-400/40 text-xs"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Qty Panen</span>
+                    <i class="fas fa-cubes text-blue-500/60 text-xs"></i>
                 </div>
-                <div id="stat-qty" class="text-xl font-bold text-white">0</div>
+                <div id="stat-qty" class="text-xl font-bold text-gray-900">0</div>
             </div>
             <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Terdistribusi</span>
-                    <i class="fas fa-share-alt text-purple-400/40 text-xs"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Terdistribusi</span>
+                    <i class="fas fa-share-alt text-purple-500/60 text-xs"></i>
                 </div>
-                <div id="stat-dist" class="text-xl font-bold text-white">0</div>
+                <div id="stat-dist" class="text-xl font-bold text-gray-900">0</div>
             </div>
             <div class="stat-card">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] uppercase tracking-wider text-muted-foreground">Est. Terdekat</span>
-                    <i class="fas fa-calendar text-amber-400/40 text-xs"></i>
+                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Est. Terdekat</span>
+                    <i class="fas fa-calendar text-amber-500/60 text-xs"></i>
                 </div>
-                <div id="stat-near" class="text-sm font-bold text-white truncate">-</div>
+                <div id="stat-near" class="text-sm font-bold text-gray-900 truncate">-</div>
             </div>
         </div>
 
@@ -563,9 +519,9 @@
 
             <!-- Error State -->
             <div id="error-state" class="hidden text-center py-12">
-                <i class="fas fa-exclamation-triangle text-3xl text-red-400/40 mb-3 block"></i>
-                <p class="text-muted-foreground text-sm" id="error-message">Gagal memuat data</p>
-                <button onclick="refreshData()" class="btn btn-ghost mt-3 text-green-400">Coba lagi</button>
+                <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-3 block"></i>
+                <p class="text-gray-500 text-sm" id="error-message">Gagal memuat data</p>
+                <button onclick="refreshData()" class="btn btn-ghost mt-3 text-green-600">Coba lagi</button>
             </div>
         </div>
 
@@ -593,35 +549,35 @@
                 <!-- Summary Cards -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div class="card p-4">
-                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Total</div>
-                        <div id="resume-total" class="text-2xl font-bold text-white">0</div>
-                        <div id="resume-sub" class="text-[10px] text-muted-foreground mt-1"></div>
+                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Total</div>
+                        <div id="resume-total" class="text-2xl font-bold text-gray-900">0</div>
+                        <div id="resume-sub" class="text-[10px] text-gray-500 mt-1"></div>
                     </div>
                     <div class="card p-4" style="border-left: 3px solid hsl(142.1 76.2% 36.3%);">
-                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Seedling</div>
-                        <div id="resume-seed" class="text-2xl font-bold text-green-400">0</div>
+                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Seedling</div>
+                        <div id="resume-seed" class="text-2xl font-bold text-green-600">0</div>
                     </div>
                     <div class="card p-4" style="border-left: 3px solid hsl(217.2 91.2% 59.8%);">
-                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Remaja</div>
-                        <div id="resume-rem" class="text-2xl font-bold text-blue-400">0</div>
+                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Remaja</div>
+                        <div id="resume-rem" class="text-2xl font-bold text-blue-600">0</div>
                     </div>
                     <div class="card p-4" style="border-left: 3px solid hsl(45.4 93.4% 47.5%);">
-                        <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Dewasa</div>
-                        <div id="resume-dew" class="text-2xl font-bold text-amber-400">0</div>
+                        <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-1">Dewasa</div>
+                        <div id="resume-dew" class="text-2xl font-bold text-amber-600">0</div>
                     </div>
                 </div>
 
                 <!-- Distribution Bars -->
                 <div class="card p-4">
-                    <div class="text-xs font-medium text-muted-foreground mb-3">Distribusi Kondisi</div>
+                    <div class="text-xs font-medium text-gray-600 mb-3">Distribusi Kondisi</div>
                     <div id="distribution-bars" class="space-y-3"></div>
                 </div>
 
                 <!-- Detail Table -->
                 <div class="card">
                     <div class="card-header flex justify-between items-center">
-                        <span class="text-xs font-medium text-muted-foreground">Detail</span>
-                        <span id="detail-count" class="text-xs text-muted-foreground"></span>
+                        <span class="text-xs font-medium text-gray-600">Detail</span>
+                        <span id="detail-count" class="text-xs text-gray-500"></span>
                     </div>
                     <div class="overflow-x-auto" style="max-height: 40vh;">
                         <table class="data-table">
@@ -633,17 +589,17 @@
 
                 <!-- Empty State -->
                 <div id="resume-empty" class="hidden text-center py-12">
-                    <i class="fas fa-calendar-times text-3xl text-muted-foreground/40 mb-3 block"></i>
-                    <p class="text-muted-foreground text-sm">Tidak ada data untuk bulan ini</p>
+                    <i class="fas fa-calendar-times text-3xl text-gray-300 mb-3 block"></i>
+                    <p class="text-gray-500 text-sm">Tidak ada data untuk bulan ini</p>
                 </div>
             </div>
 
             <!-- Proyeksi View -->
             <div id="resume-proyeksi" class="hidden space-y-4">
                 <div class="card p-4 flex gap-3">
-                    <i class="fas fa-info-circle text-green-400/50 mt-0.5"></i>
-                    <p class="text-xs text-muted-foreground leading-relaxed">
-                        Estimasi kebutuhan tempat untuk <strong class="text-white">2-4 bulan ke depan</strong>. 
+                    <i class="fas fa-info-circle text-green-500/60 mt-0.5"></i>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Estimasi kebutuhan tempat untuk <strong class="text-gray-900">3-5 bulan ke depan</strong>. 
                         Gunakan untuk persiapan lahan dan resources.
                     </p>
                 </div>
@@ -664,8 +620,8 @@
                     </div>
                 </div>
                 <div id="proyeksi-empty" class="hidden text-center py-12">
-                    <i class="fas fa-binoculars text-3xl text-muted-foreground/40 mb-3 block"></i>
-                    <p class="text-muted-foreground text-sm">Tidak ada proyeksi</p>
+                    <i class="fas fa-binoculars text-3xl text-gray-300 mb-3 block"></i>
+                    <p class="text-gray-500 text-sm">Tidak ada proyeksi</p>
                 </div>
             </div>
         </div>
@@ -759,6 +715,7 @@ const BULAN_MAP = {};
 function monthKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
 function monthLabel(d) { return `${MONTH_SHORT[d.getMonth()]} ${d.getFullYear()}`; }
 function monthFull(d) { return `${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`; }
+function formatEstBulan(d) { return d ? `${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}` : '-'; }
 
 function parseEstBulan(val) {
     if (!val) return null;
@@ -1073,6 +1030,32 @@ function renderTable(data) {
         tbody.innerHTML = `<tr><td colspan="${headers.length}" class="text-center py-8 text-muted-foreground">
             <i class="fas fa-search mr-2 opacity-50"></i>Tidak ada data
         </td></tr>`;
+        return;
+    }
+    
+    if (currentTab === 'lebih_2_bulan') {
+        const grouped = {};
+        data.forEach(row => {
+            const d = parseEstBulan(row['ESTIMASI BULAN PANEN']);
+            const key = d ? monthKey(d) : 'unknown';
+            const label = d ? formatEstBulan(d) : 'Tanpa Tanggal';
+            if (!grouped[key]) grouped[key] = { label, items: [] };
+            grouped[key].items.push(row);
+        });
+        
+        const sortedKeys = Object.keys(grouped).sort();
+        let html = '';
+        sortedKeys.forEach(key => {
+            const g = grouped[key];
+            html += `<tr><td colspan="${headers.length}" class="bg-amber-500/10 px-4 py-2 font-semibold text-amber-400 text-xs">
+                <i class="fas fa-calendar mr-2 opacity-50"></i>${g.label} <span class="font-normal text-muted-foreground">(${g.items.length})</span>
+            </td></tr>`;
+            g.items.forEach(row => {
+                const cells = headers.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
+                html += `<tr>${cells}</tr>`;
+            });
+        });
+        tbody.innerHTML = html;
     } else {
         tbody.innerHTML = data.map(row => {
             const cells = headers.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
@@ -1092,31 +1075,84 @@ function renderCardList(data) {
         return;
     }
     
-    container.innerHTML = data.map(row => `
-        <div class="mobile-card">
-            <div class="flex justify-between items-start mb-2">
-                <div>
-                    <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
-                    <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+    if (currentTab === 'lebih_2_bulan') {
+        const grouped = {};
+        data.forEach(row => {
+            const d = parseEstBulan(row['ESTIMASI BULAN PANEN']);
+            const key = d ? monthKey(d) : 'unknown';
+            const label = d ? formatEstBulan(d) : 'Tanpa Tanggal';
+            if (!grouped[key]) grouped[key] = { label, items: [] };
+            grouped[key].items.push(row);
+        });
+        
+        const sortedKeys = Object.keys(grouped).sort();
+        container.innerHTML = sortedKeys.map(key => {
+            const g = grouped[key];
+            return `
+                <div class="mb-4">
+                    <div class="flex items-center gap-2 mb-2 px-1">
+                        <i class="fas fa-calendar text-amber-400/50 text-xs"></i>
+                        <span class="text-xs font-semibold text-amber-400">${g.label}</span>
+                        <span class="text-xs text-muted-foreground">(${g.items.length})</span>
+                    </div>
+                    ${g.items.map(row => `
+                        <div class="mobile-card mb-2">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
+                                    <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+                                </div>
+                                ${renderBadge('STATUS', row['STATUS'])}
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs">
+                                <div>
+                                    <div class="text-muted-foreground text-[10px]">Kondisi</div>
+                                    ${renderBadge('KONDISI', row['KONDISI'])}
+                                </div>
+                                <div>
+                                    <div class="text-muted-foreground text-[10px]">Qty Panen</div>
+                                    <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
+                                </div>
+                                <div>
+                                    <div class="text-muted-foreground text-[10px]">Grade</div>
+                                    ${renderBadge('GRADE', row['GRADE'])}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
-                ${renderBadge('STATUS', row['STATUS'])}
-            </div>
-            <div class="grid grid-cols-3 gap-2 text-xs">
-                <div>
-                    <div class="text-muted-foreground text-[10px]">Kondisi</div>
-                    ${renderBadge('KONDISI', row['KONDISI'])}
+            `;
+        }).join('');
+    } else {
+        container.innerHTML = data.map(row => {
+            const estD = parseEstBulan(row['ESTIMASI BULAN PANEN']);
+            return `
+                <div class="mobile-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
+                            <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+                        </div>
+                        ${renderBadge('STATUS', row['STATUS'])}
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div>
+                            <div class="text-muted-foreground text-[10px]">Kondisi</div>
+                            ${renderBadge('KONDISI', row['KONDISI'])}
+                        </div>
+                        <div>
+                            <div class="text-muted-foreground text-[10px]">Qty Panen</div>
+                            <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
+                        </div>
+                        <div>
+                            <div class="text-muted-foreground text-[10px]">Est. Bulan</div>
+                            <div class="text-amber-400/70">${estD ? formatEstBulan(estD) : '-'}</div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <div class="text-muted-foreground text-[10px]">Qty Panen</div>
-                    <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
-                </div>
-                <div>
-                    <div class="text-muted-foreground text-[10px]">Est. Bulan</div>
-                    <div class="text-amber-400/70">${escapeHtml(row['ESTIMASI BULAN PANEN']||'-')}</div>
-                </div>
-            </div>
-        </div>
-    `).join('');
+            `;
+        }).join('');
+    }
 }
 
 function renderCell(col, val) {
@@ -1132,20 +1168,23 @@ function renderCell(col, val) {
         const n = parseFloat(v.replace(/\./g,'').replace(',','.'));
         if (!isNaN(n)) return `<span class="font-mono text-white">${n.toLocaleString('id-ID')}</span>`;
     }
-    if (colUpper === 'KODE') return `<span class="font-mono text-green-400/70 text-xs">${escapeHtml(v)}</span>`;
-    if (colUpper.includes('ESTIMASI') || colUpper.includes('BULAN')) return `<span class="text-amber-400/70">${escapeHtml(v)}</span>`;
+    if (colUpper === 'KODE') return `<span class="font-mono text-green-600 text-xs">${escapeHtml(v)}</span>`;
+    if (colUpper.includes('ESTIMASI') || colUpper.includes('BULAN')) {
+        const d = parseEstBulan(v);
+        return `<span class="text-amber-600">${d ? formatEstBulan(d) : escapeHtml(v)}</span>`;
+    }
     
     return escapeHtml(v);
 }
 
 function renderBadge(type, val) {
     const v = String(val||'').trim();
-    if (!v) return '<span class="text-muted-foreground/50">-</span>';
+    if (!v) return '<span class="text-gray-400">-</span>';
     
     let style;
-    if (type === 'STATUS') style = STATUS_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
-    else if (type === 'GRADE') style = GRADE_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
-    else style = KONDISI_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' };
+    if (type === 'STATUS') style = STATUS_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#6b7280' };
+    else if (type === 'GRADE') style = GRADE_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#6b7280' };
+    else style = KONDISI_STYLES[v.toUpperCase()] || { bg: 'rgba(107,114,128,0.15)', color: '#6b7280' };
     
     return `<span class="badge" style="background:${style.bg};color:${style.color}">${escapeHtml(v)}</span>`;
 }
@@ -1346,7 +1385,7 @@ function renderBulanan() {
     document.getElementById('detail-count').textContent = `${g.items.length} produk`;
     
     if (!g.items.length) {
-        detailBody.innerHTML = `<tr><td colspan="${detailCols.length}" class="text-center py-4 text-muted-foreground">-</td></tr>`;
+        detailBody.innerHTML = `<tr><td colspan="${detailCols.length}" class="text-center py-4 text-gray-400">-</td></tr>`;
     } else {
         detailBody.innerHTML = g.items.map(row => {
             const cells = detailCols.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
@@ -1367,7 +1406,7 @@ function renderProyeksi() {
     const now = new Date();
     const months = [];
     
-    for (let i = 2; i <= 4; i++) {
+    for (let i = 3; i <= 5; i++) {
         const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
         months.push({ key: monthKey(d), label: monthFull(d), total: 0, seedling: 0, remaja: 0, dewasa: 0 });
     }
@@ -1407,14 +1446,14 @@ function renderProyeksi() {
             <tr class="${isMax ? 'bg-green-500/5' : ''}">
                 <td>
                     <div class="flex items-center gap-2">
-                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center ${isMax ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-muted-foreground'}">+${idx+2}</span>
-                        <span class="font-medium text-white">${m.label}</span>
+                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center ${isMax ? 'bg-green-500/20 text-green-600' : 'bg-gray-100 text-gray-500'}">+${idx+3}</span>
+                        <span class="font-medium text-gray-900">${m.label}</span>
                     </div>
                 </td>
-                <td class="text-right font-mono font-bold text-white">${m.total.toLocaleString('id-ID')}</td>
-                <td class="text-right font-mono text-green-400">${m.seedling.toLocaleString('id-ID')}</td>
-                <td class="text-right font-mono text-blue-400">${m.remaja.toLocaleString('id-ID')}</td>
-                <td class="text-right font-mono text-amber-400">${m.dewasa.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono font-bold text-gray-900">${m.total.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-green-600">${m.seedling.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-blue-600">${m.remaja.toLocaleString('id-ID')}</td>
+                <td class="text-right font-mono text-amber-600">${m.dewasa.toLocaleString('id-ID')}</td>
             </tr>
         `;
     }).join('');
@@ -1440,10 +1479,10 @@ function showError(msg) {
 
 function showToast(msg, type = 'info') {
     const styles = {
-        success: { bg: 'rgba(34,197,94,0.15)', border: 'rgba(34,197,94,0.3)', color: '#4ade80', icon: 'fa-check-circle' },
-        error: { bg: 'rgba(239,68,68,0.15)', border: 'rgba(239,68,68,0.3)', color: '#f87171', icon: 'fa-times-circle' },
-        warning: { bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.3)', color: '#fbbf24', icon: 'fa-exclamation-circle' },
-        info: { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.3)', color: '#60a5fa', icon: 'fa-info-circle' }
+        success: { bg: 'rgba(34,197,94,0.1)', border: 'rgba(34,197,94,0.2)', color: '#16a34a', icon: 'fa-check-circle' },
+        error: { bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.2)', color: '#dc2626', icon: 'fa-times-circle' },
+        warning: { bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.2)', color: '#d97706', icon: 'fa-exclamation-circle' },
+        info: { bg: 'rgba(59,130,246,0.1)', border: 'rgba(59,130,246,0.2)', color: '#2563eb', icon: 'fa-info-circle' }
     };
     const s = styles[type] || styles.info;
     
