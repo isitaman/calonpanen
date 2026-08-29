@@ -519,7 +519,7 @@
 
             <!-- Error State -->
             <div id="error-state" class="hidden text-center py-12">
-                <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-3 block"></i>
+                <i class="fas fa-exclamation-triangle text-3xl text-red-500 mb-3 block"></i>
                 <p class="text-gray-500 text-sm" id="error-message">Gagal memuat data</p>
                 <button onclick="refreshData()" class="btn btn-ghost mt-3 text-green-600">Coba lagi</button>
             </div>
@@ -1047,8 +1047,8 @@ function renderTable(data) {
         let html = '';
         sortedKeys.forEach(key => {
             const g = grouped[key];
-            html += `<tr><td colspan="${headers.length}" class="bg-amber-500/10 px-4 py-2 font-semibold text-amber-400 text-xs">
-                <i class="fas fa-calendar mr-2 opacity-50"></i>${g.label} <span class="font-normal text-muted-foreground">(${g.items.length})</span>
+            html += `<tr><td colspan="${headers.length}" class="bg-amber-50 px-4 py-2 font-semibold text-amber-700 text-xs">
+                <i class="fas fa-calendar mr-2 opacity-50"></i>${g.label} <span class="font-normal text-gray-500">(${g.items.length})</span>
             </td></tr>`;
             g.items.forEach(row => {
                 const cells = headers.map(col => `<td>${renderCell(col, row[col])}</td>`).join('');
@@ -1091,30 +1091,30 @@ function renderCardList(data) {
             return `
                 <div class="mb-4">
                     <div class="flex items-center gap-2 mb-2 px-1">
-                        <i class="fas fa-calendar text-amber-400/50 text-xs"></i>
-                        <span class="text-xs font-semibold text-amber-400">${g.label}</span>
-                        <span class="text-xs text-muted-foreground">(${g.items.length})</span>
+                        <i class="fas fa-calendar text-amber-500 text-xs"></i>
+                        <span class="text-xs font-semibold text-amber-700">${g.label}</span>
+                        <span class="text-xs text-gray-500">(${g.items.length})</span>
                     </div>
                     ${g.items.map(row => `
                         <div class="mobile-card mb-2">
                             <div class="flex justify-between items-start mb-2">
                                 <div>
-                                    <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
-                                    <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+                                    <div class="font-mono text-green-600 text-xs">${escapeHtml(row['KODE']||'-')}</div>
+                                    <div class="font-medium text-gray-900 text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
                                 </div>
                                 ${renderBadge('STATUS', row['STATUS'])}
                             </div>
                             <div class="grid grid-cols-3 gap-2 text-xs">
                                 <div>
-                                    <div class="text-muted-foreground text-[10px]">Kondisi</div>
+                                    <div class="text-gray-500 text-[10px]">Kondisi</div>
                                     ${renderBadge('KONDISI', row['KONDISI'])}
                                 </div>
                                 <div>
-                                    <div class="text-muted-foreground text-[10px]">Qty Panen</div>
-                                    <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
+                                    <div class="text-gray-500 text-[10px]">Qty Panen</div>
+                                    <div class="font-mono text-gray-900">${formatNumber(row['QTY PANEN'])}</div>
                                 </div>
                                 <div>
-                                    <div class="text-muted-foreground text-[10px]">Grade</div>
+                                    <div class="text-gray-500 text-[10px]">Grade</div>
                                     ${renderBadge('GRADE', row['GRADE'])}
                                 </div>
                             </div>
@@ -1130,23 +1130,23 @@ function renderCardList(data) {
                 <div class="mobile-card">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <div class="font-mono text-green-400/70 text-xs">${escapeHtml(row['KODE']||'-')}</div>
-                            <div class="font-medium text-white text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
+                            <div class="font-mono text-green-600 text-xs">${escapeHtml(row['KODE']||'-')}</div>
+                            <div class="font-medium text-gray-900 text-sm mt-0.5">${escapeHtml(row['NAMA PRODUK']||'-')}</div>
                         </div>
                         ${renderBadge('STATUS', row['STATUS'])}
                     </div>
                     <div class="grid grid-cols-3 gap-2 text-xs">
                         <div>
-                            <div class="text-muted-foreground text-[10px]">Kondisi</div>
+                            <div class="text-gray-500 text-[10px]">Kondisi</div>
                             ${renderBadge('KONDISI', row['KONDISI'])}
                         </div>
                         <div>
-                            <div class="text-muted-foreground text-[10px]">Qty Panen</div>
-                            <div class="font-mono text-white">${formatNumber(row['QTY PANEN'])}</div>
+                            <div class="text-gray-500 text-[10px]">Qty Panen</div>
+                            <div class="font-mono text-gray-900">${formatNumber(row['QTY PANEN'])}</div>
                         </div>
                         <div>
-                            <div class="text-muted-foreground text-[10px]">Est. Bulan</div>
-                            <div class="text-amber-400/70">${estD ? formatEstBulan(estD) : '-'}</div>
+                            <div class="text-gray-500 text-[10px]">Est. Bulan</div>
+                            <div class="text-amber-600">${estD ? formatEstBulan(estD) : '-'}</div>
                         </div>
                     </div>
                 </div>
@@ -1157,7 +1157,7 @@ function renderCardList(data) {
 
 function renderCell(col, val) {
     const v = String(val||'').trim();
-    if (!v) return '<span class="text-muted-foreground/50">-</span>';
+    if (!v) return '<span class="text-gray-400">-</span>';
     
     const colUpper = col.toUpperCase();
     
@@ -1166,7 +1166,7 @@ function renderCell(col, val) {
     if (colUpper === 'KONDISI') return renderBadge('KONDISI', v);
     if (colUpper.includes('QTY')) {
         const n = parseFloat(v.replace(/\./g,'').replace(',','.'));
-        if (!isNaN(n)) return `<span class="font-mono text-white">${n.toLocaleString('id-ID')}</span>`;
+        if (!isNaN(n)) return `<span class="font-mono text-gray-900">${n.toLocaleString('id-ID')}</span>`;
     }
     if (colUpper === 'KODE') return `<span class="font-mono text-green-600 text-xs">${escapeHtml(v)}</span>`;
     if (colUpper.includes('ESTIMASI') || colUpper.includes('BULAN')) {
