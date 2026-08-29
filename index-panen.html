@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Akan Panen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        base:{900:'#0C0F14',800:'#141820',700:'#1C2030',600:'#2A2F3E',500:'#3A4050'},
+                        accent:{DEFAULT:'#10B981',light:'#34D399',dark:'#059669'}
+                    },
+                    fontFamily:{display:['"Space Grotesk"','sans-serif']}
+                }
+            }
+        }
+    </script>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:'Space Grotesk',sans-serif;margin:0}
+        ::-webkit-scrollbar{width:5px;height:5px}
+        ::-webkit-scrollbar-track{background:#141820}
+        ::-webkit-scrollbar-thumb{background:#2A2F3E;border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:#3A4050}
+
+        .login-bg{position:relative;overflow:hidden}
+        .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12;animation:bf 20s ease-in-out infinite}
+        .b1{width:500px;height:500px;background:#10B981;top:-150px;right:-100px}
+        .b2{width:350px;height:350px;background:#059669;bottom:-100px;left:-50px;animation-delay:-10s}
+        .b3{width:250px;height:250px;background:#34D399;top:50%;left:50%;animation-delay:-5s}
+        @keyframes bf{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(30px,-40px) scale(1.1)}50%{transform:translate(-20px,20px) scale(.95)}75%{transform:translate(15px,30px) scale(1.05)}}
+
+        .login-card{background:rgba(20,24,32,.85);backdrop-filter:blur(24px);border:1px solid rgba(42,47,62,.6)}
+
+        .inp{background:#1C2030;border:1px solid #2A2F3E;transition:border-color .2s,box-shadow .2s;color:#fff}
+        .inp:focus{border-color:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,.15);outline:none}
+        .inp::placeholder{color:#555}
+
+        .btn-p{background:#10B981;color:#fff;transition:background .2s,transform .1s,box-shadow .2s}
+        .btn-p:hover{background:#059669;box-shadow:0 4px 20px rgba(16,185,129,.3)}
+        .btn-p:active{transform:scale(.98)}
+        .btn-p:disabled{opacity:.5;cursor:not-allowed}
+
+        .dt{border-collapse:separate;border-spacing:0;width:100%}
+        .dt thead th{position:sticky;top:0;z-index:10;background:#1C2030;border-bottom:1px solid #2A2F3E;padding:12px 16px;text-align:left;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#8B90A0;cursor:pointer;user-select:none;transition:color .2s}
+        .dt thead th:hover{color:#E4E6EB}
+        .dt thead th.srt{color:#10B981}
+        .dt tbody tr{transition:background .15s}
+        .dt tbody tr:hover{background:rgba(16,185,129,.04)}
+        .dt tbody td{padding:11px 16px;border-bottom:1px solid rgba(42,47,62,.4);font-size:.85rem;color:#ccc}
+
+        .s-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:.73rem;font-weight:500}
+        .s-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+        .g-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 6px;border-radius:6px;font-size:.78rem;font-weight:700}
+
+        .sc{background:#141820;border:1px solid #2A2F3E;border-radius:12px;padding:20px;transition:border-color .2s,transform .2s}
+        .sc:hover{border-color:rgba(16,185,129,.3);transform:translateY(-2px)}
+
+        .toast{animation:tI .3s ease forwards}
+        .toast.out{animation:tO .3s ease forwards}
+        @keyframes tI{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes tO{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(80px)}}
+
+        .fi{animation:fdI .4s ease forwards}
+        @keyframes fdI{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+        .skel{background:linear-gradient(90deg,#1C2030 25%,#2A2F3E 50%,#1C2030 75%);background-size:200% 100%;animation:sh 1.5s infinite;border-radius:6px}
+        @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+        .cfg-warn{position:fixed;top:0;left:0;right:0;background:#DC2626;color:#fff;text-align:center;padding:10px;font-size:.85rem;z-index:200}
+
+        @media(max-width:768px){
+            .stat-g{grid-template-columns:repeat(2,1fr)!important}
+            .fb{flex-direction:column}
+        }
+        @media(max-width:480px){
+            .stat-g{grid-template-columns:1fr!important}
+        }
+        @media(prefers-reduced-motion:reduce){
+            *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+        }
+    </style>
+</head>
+<body class="bg-base-900 text-gray-200 min-h-screen">
+
+<div id="cfg-warn" class="cfg-warn" style="display:none">
+    <i class="fas fa-exclamation-triangle mr-1"></i>
+    URL Google Apps Script belum dikonfigurasi. Buka <code>index-panen.html</code> dan ganti <code>YOUR_DEPLOYMENT_ID</code>.
+</div>
+
+<div id="toasts" class="fixed top-4 right-4 z-50 flex flex-col gap-2" role="alert" aria-live="polite"></div>
+
+<!-- ========== LOGIN ========== -->
+<section id="v-login" class="login-bg min-h-screen flex items-center justify-center p-4">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="login-card rounded-2xl p-8 w-full max-w-md fi relative z-10">
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <i class="fas fa-seedling text-2xl text-accent"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">Data Akan Panen</h1>
+            <p class="text-sm text-gray-500 mt-1">Masuk untuk melihat data</p>
+        </div>
+        <form id="frm-login" class="space-y-4" onsubmit="return false">
+            <div>
+                <label class="block text-sm font-medium text-gray-400 mb-1.5" for="i-user">Username</label>
+                <div class="relative">
+                    <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
+                    <input type="text" id="i-user" class="inp w-full pl-10 pr-4 py-2.5 rounded-lg text-sm" placeholder="Masukkan username" autocomplete="username" required>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-400 mb-1.5" for="i-pass">Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
+                    <input type="password" id="i-pass" class="inp w-full pl-10 pr-10 py-2.5 rounded-lg text-sm" placeholder="Masukkan password" autocomplete="current-password" required>
+                    <button type="button" id="btn-pw" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-400 transition" aria-label="Toggle password">
+                        <i class="fas fa-eye text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="login-err" class="hidden text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">
+                <i class="fas fa-exclamation-circle mr-1"></i><span id="login-err-t"></span>
+            </div>
+            <button type="submit" id="btn-login" class="btn-p w-full py-2.5 rounded-lg font-semibold text-sm mt-2" onclick="doLogin()">
+                <span id="btn-login-t">Masuk</span>
+                <i id="btn-login-l" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- ========== DASHBOARD ========== -->
+<section id="v-dash" class="hidden min-h-screen flex flex-col">
+    <header class="bg-base-800/80 backdrop-blur-md border-b border-base-600 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                    <i class="fas fa-seedling text-accent text-sm"></i>
+                </div>
+                <span class="font-bold text-white text-sm hidden sm:inline">Data Akan Panen</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="u-name" class="text-sm text-gray-400 hidden sm:inline"></span>
+                <span id="u-role" class="text-xs font-medium px-2 py-0.5 rounded-md"></span>
+                <button onclick="doLogout()" class="text-gray-500 hover:text-red-400 transition p-1.5 rounded-lg hover:bg-base-700" aria-label="Logout" title="Logout">
+                    <i class="fas fa-sign-out-alt text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+        <!-- Stats -->
+        <div class="stat-g grid gap-4" style="grid-template-columns:repeat(4,1fr)">
+            <div class="sc">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Produk</span>
+                    <i class="fas fa-box text-accent/30 text-sm"></i>
+                </div>
+                <div id="s-total" class="text-2xl font-bold text-white">0</div>
+            </div>
+            <div class="sc">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Qty Panen</span>
+                    <i class="fas fa-cubes text-blue-400/30 text-sm"></i>
+                </div>
+                <div id="s-qty" class="text-2xl font-bold text-white">0</div>
+            </div>
+            <div class="sc">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-wider">Total Terdistribusi</span>
+                    <i class="fas fa-share-alt text-emerald-400/30 text-sm"></i>
+                </div>
+                <div id="s-dist" class="text-2xl font-bold text-white">0</div>
+            </div>
+            <div class="sc">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-500 uppercase tracking-wider">Est. Terdekat</span>
+                    <i class="fas fa-calendar text-amber-400/30 text-sm"></i>
+                </div>
+                <div id="s-near" class="text-lg font-bold text-white truncate">-</div>
+            </div>
+        </div>
+
+        <!-- Data Area -->
+        <div id="data-area" class="space-y-6">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div class="fb flex items-center gap-3 flex-1 flex-wrap">
+                    <div class="relative flex-1 min-w-[200px]">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
+                        <input type="text" id="i-search" class="inp w-full pl-10 pr-16 py-2 rounded-lg text-sm" placeholder="Cari kode, nama, kondisi..." autocomplete="off" aria-label="Cari data">
+                        <kbd class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-600 bg-base-600 px-1.5 py-0.5 rounded border border-base-500 hidden sm:inline">Ctrl+K</kbd>
+                    </div>
+                    <select id="f-kondisi" class="inp px-3 py-2 rounded-lg text-sm min-w-[160px]" aria-label="Filter kondisi"><option value="">Semua Kondisi</option></select>
+                    <select id="f-status" class="inp px-3 py-2 rounded-lg text-sm min-w-[140px]" aria-label="Filter status"><option value="">Semua Status</option></select>
+                    <select id="f-grade" class="inp px-3 py-2 rounded-lg text-sm min-w-[120px]" aria-label="Filter grade"><option value="">Semua Grade</option></select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="refreshData()" class="text-gray-500 hover:text-accent transition p-2 rounded-lg hover:bg-base-800" title="Refresh" aria-label="Refresh">
+                        <i class="fas fa-sync-alt text-sm" id="ico-ref"></i>
+                    </button>
+                    <button onclick="exportCSV()" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-500 hover:text-white border border-base-600 hover:border-base-500 transition" title="Export CSV">
+                        <i class="fas fa-download text-xs"></i><span class="hidden sm:inline">CSV</span>
+                    </button>
+                </div>
+            </div>
+            <div id="tbl-wrap" class="bg-base-800 rounded-xl border border-base-600 overflow-hidden">
+                <div class="overflow-x-auto" style="max-height:60vh;overflow-y:auto">
+                    <table class="dt" id="tbl"><thead id="t-head"></thead><tbody id="t-body"></tbody></table>
+                </div>
+                <div id="t-foot" class="px-4 py-3 border-t border-base-600 flex items-center justify-between text-xs text-gray-600">
+                    <span id="row-cnt">0 data</span>
+                    <span id="t-time"></span>
+                </div>
+            </div>
+            <div id="v-load" class="hidden bg-base-800 rounded-xl border border-base-600 p-6 space-y-4">
+                <div class="skel h-4 w-full"></div><div class="skel h-4 w-5/6"></div><div class="skel h-4 w-4/5"></div><div class="skel h-4 w-full"></div><div class="skel h-4 w-3/4"></div>
+            </div>
+            <div id="v-err" class="hidden text-center py-16">
+                <i class="fas fa-exclamation-triangle text-4xl text-red-500/40 mb-4 block"></i>
+                <p class="text-gray-500" id="err-msg">Gagal memuat data</p>
+                <button onclick="refreshData()" class="mt-4 text-accent hover:text-accent-light text-sm transition">Coba lagi</button>
+            </div>
+        </div>
+
+    </main>
+</section>
+
+<script>
+// ============================================
+// KONFIGURASI — Ganti URL di bawah ini
+// ============================================
+const API_URL = 'https://script.google.com/macros/s/AKfycbzrISCHX8Biandy4Bzccj2PeF5fDO4BRL2gs-XcbCH_PwxH0V5aCvYlclpCjS33W17dhA/exec';
+
+// ============================================
+// STATE
+// ============================================
+let token = null, user = null;
+let store = [];
+let headers = [];
+let sCol = null, sDir = 'asc';
+let qSearch = '', fKondisi = '', fStatus = '', fGrade = '';
+let loading = false;
+
+// ============================================
+// STATUS STYLES
+// ============================================
+const SS = {
+    'SIAP PANEN':{bg:'rgba(16,185,129,.12)',tx:'#34D399',dt:'#10B981'},
+    'PANEN':{bg:'rgba(16,185,129,.12)',tx:'#34D399',dt:'#10B981'},
+    'PROSES':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA',dt:'#3B82F6'},
+    'DALAM PROSES':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA',dt:'#3B82F6'},
+    'BELUM':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24',dt:'#F59E0B'},
+    'BELUM SIAP':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24',dt:'#F59E0B'},
+    'SELESAI':{bg:'rgba(139,92,246,.12)',tx:'#A78BFA',dt:'#8B5CF6'},
+    'TERTUNDA':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
+    'CANCEL':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
+    'DIBATALKAN':{bg:'rgba(239,68,68,.12)',tx:'#F87171',dt:'#EF4444'},
+};
+const DS = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF',dt:'#6B7280'};
+
+// Grade styles
+const GS = {
+    'A':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},'B':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
+    'C':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},'D':{bg:'rgba(239,68,68,.12)',tx:'#F87171'},
+    'PREMIUM':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},'STANDARD':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
+    'EKONOMI':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},'-':{bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'},
+};
+const DG = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'};
+
+// Kondisi styles
+const KS = {
+    'SEEDLING':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},
+    'PEMBESARAN SEEDLING':{bg:'rgba(16,185,129,.12)',tx:'#34D399'},
+    'REMAJA':{bg:'rgba(59,130,246,.12)',tx:'#60A5FA'},
+    'DEWASA':{bg:'rgba(245,158,11,.12)',tx:'#FBBF24'},
+};
+const DK = {bg:'rgba(107,114,128,.12)',tx:'#9CA3AF'};
+
+// ============================================
+// MONTH HELPERS
+// ============================================
+const MNAMES = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const MSHORT = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const BULAN_MAP = {};
+['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember',
+ 'jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].forEach((b,i) => BULAN_MAP[b] = i % 12);
+
+function parseEstBulan(val) {
+    if (!val) return null;
+    const s = String(val).trim();
+    // "Desember 2025" format
+    let m = s.toLowerCase().match(/^(\w+)\s+(\d{4})$/);
+    if (m && BULAN_MAP[m[1]] !== undefined) return new Date(parseInt(m[2]), BULAN_MAP[m[1]], 1);
+    // dd/mm/yyyy
+    m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (m) return new Date(parseInt(m[3]), parseInt(m[2])-1, 1);
+    // yyyy-mm-dd
+    m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/);
+    if (m) return new Date(parseInt(m[1]), parseInt(m[2])-1, 1);
+    // Native fallback
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) return new Date(d.getFullYear(), d.getMonth(), 1);
+    return null;
+}
+
+// ============================================
+// API
+// ============================================
+async function api(p) {
+    const u = new URL(API_URL);
+    Object.entries(p).forEach(([k,v]) => u.searchParams.set(k,v));
+    const r = await fetch(u.toString());
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+}
+
+// ============================================
+// AUTH
+// ============================================
+async function doLogin() {
+    const un = document.getElementById('i-user').value.trim();
+    const pw = document.getElementById('i-pass').value;
+    const errEl = document.getElementById('login-err');
+    const errT = document.getElementById('login-err-t');
+    const btn = document.getElementById('btn-login');
+
+    if (!un||!pw){ errT.textContent='Username dan password wajib diisi'; errEl.classList.remove('hidden'); return; }
+    errEl.classList.add('hidden');
+    btn.disabled=true;
+    document.getElementById('btn-login-t').textContent='Memproses...';
+    document.getElementById('btn-login-l').classList.remove('hidden');
+
+    try {
+        const r = await api({action:'login',username:un,password:pw});
+        if (r.success) {
+            token=r.token; user={name:r.name,role:r.role,username:r.username};
+            localStorage.setItem('pt_t',token);
+            localStorage.setItem('pt_u',JSON.stringify(user));
+            toast('Selamat datang, '+user.name,'success');
+            goDash();
+        } else { errT.textContent=r.error||'Login gagal'; errEl.classList.remove('hidden'); }
+    } catch(e) { errT.textContent='Tidak dapat terhubung ke server'; errEl.classList.remove('hidden'); }
+    finally { btn.disabled=false; document.getElementById('btn-login-t').textContent='Masuk'; document.getElementById('btn-login-l').classList.add('hidden'); }
+}
+
+function doLogout() {
+    token=null; user=null;
+    store=[];
+    localStorage.removeItem('pt_t');
+    localStorage.removeItem('pt_u');
+    goLogin();
+    toast('Berhasil keluar','info');
+}
+
+async function checkSess() {
+    const t = localStorage.getItem('pt_t');
+    const u = localStorage.getItem('pt_u');
+    if (t && u) {
+        try {
+            const r = await api({action:'verify',token:t});
+            if (r.valid){ token=t; user=JSON.parse(u); goDash(); return; }
+        } catch(e) {}
+    }
+    localStorage.removeItem('pt_t');
+    localStorage.removeItem('pt_u');
+    goLogin();
+}
+
+// ============================================
+// VIEW
+// ============================================
+function goLogin() {
+    document.getElementById('v-login').classList.remove('hidden');
+    document.getElementById('v-dash').classList.add('hidden');
+    document.getElementById('i-user').value='';
+    document.getElementById('i-pass').value='';
+}
+
+function goDash() {
+    document.getElementById('v-login').classList.add('hidden');
+    document.getElementById('v-dash').classList.remove('hidden');
+    document.getElementById('u-name').textContent=user.name;
+    const rb=document.getElementById('u-role');
+    rb.textContent=user.role.toUpperCase();
+    rb.className=user.role==='budidaya'
+        ?'text-xs font-medium px-2 py-0.5 rounded-md bg-accent/15 text-accent border border-accent/20'
+        :'text-xs font-medium px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 border border-blue-500/20';
+    loadData();
+}
+
+// ============================================
+// DATA
+// ============================================
+async function loadData() {
+    if (loading) return;
+    loading=true; setLoad(true);
+    try {
+        const r=await api({action:'getData',sheet:'data_akan_panen',token});
+        if (r.error) throw new Error(r.error);
+        store=r.data||[]; headers=r.headers||[];
+        fillFilters(); render(); stats();
+        document.getElementById('t-time').textContent='Diperbarui: '+new Date().toLocaleTimeString('id-ID');
+        setLoad(false);
+    } catch(e) { setLoad(false); setErr(e.message); }
+    finally { loading=false; }
+}
+
+function refreshData() {
+    const ico=document.getElementById('ico-ref'); ico.classList.add('fa-spin');
+    loadData().finally(()=>setTimeout(()=>ico.classList.remove('fa-spin'),500));
+}
+
+// ============================================
+// FILTER & SORT
+// ============================================
+function filtered() {
+    let d=store||[];
+    if (qSearch){ const q=qSearch.toLowerCase(); d=d.filter(r=>Object.values(r).some(v=>String(v||'').toLowerCase().includes(q))); }
+    if (fKondisi) d=d.filter(r=>String(r['KONDISI']||'').toUpperCase().trim()===fKondisi.toUpperCase());
+    if (fStatus) d=d.filter(r=>String(r['STATUS']||'').toUpperCase().trim()===fStatus.toUpperCase());
+    if (fGrade) d=d.filter(r=>String(r['GRADE']||'').toUpperCase().trim()===fGrade.toUpperCase());
+    if (sCol) {
+        d=[...d].sort((a,b)=>{
+            let va=a[sCol],vb=b[sCol];
+            const na=parseFloat(va),nb=parseFloat(vb);
+            if (!isNaN(na)&&!isNaN(nb)) return sDir==='asc'?na-nb:nb-na;
+            va=String(va||'').toLowerCase(); vb=String(vb||'').toLowerCase();
+            return va<vb?(sDir==='asc'?-1:1):va>vb?(sDir==='asc'?1:-1):0;
+        });
+    }
+    return d;
+}
+
+function fillFilters() {
+    const ks=new Set(),ss=new Set(),gs=new Set();
+    store.forEach(r=>{
+        const k=String(r['KONDISI']||'').trim(),s=String(r['STATUS']||'').trim(),g=String(r['GRADE']||'').trim();
+        if(k)ks.add(k); if(s)ss.add(s); if(g)gs.add(g);
+    });
+    const selK=document.getElementById('f-kondisi'),selS=document.getElementById('f-status'),selG=document.getElementById('f-grade');
+    const pvK=fKondisi,pvS=fStatus,pvG=fGrade;
+    
+    selK.innerHTML='<option value="">Semua Kondisi</option>';
+    [...ks].sort().forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=k;selK.appendChild(o);});
+    selK.value=pvK;
+    
+    selS.innerHTML='<option value="">Semua Status</option>';
+    [...ss].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;selS.appendChild(o);});
+    selS.value=pvS;
+    
+    selG.innerHTML='<option value="">Semua Grade</option>';
+    [...gs].sort().forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;selG.appendChild(o);});
+    selG.value=pvG;
+}
+
+// ============================================
+// RENDER
+// ============================================
+function render() {
+    const data=filtered(), thead=document.getElementById('t-head'), tbody=document.getElementById('t-body'), cnt=document.getElementById('row-cnt');
+    const total=store.length;
+    if (!headers.length){thead.innerHTML='';tbody.innerHTML='';cnt.textContent='0 data';return;}
+    let hh='<tr>';
+    headers.forEach(c=>{
+        const is=sCol===c;
+        const arr=is?(sDir==='asc'?' <i class="fas fa-sort-up text-[10px]"></i>':' <i class="fas fa-sort-down text-[10px]"></i>'):' <i class="fas fa-sort text-[10px] opacity-25"></i>';
+        hh+=`<th class="${is?'srt':''}" onclick="doSort('${c.replace(/'/g,"\\'")}')">${c}${arr}</th>`;
+    });
+    hh+='</tr>'; thead.innerHTML=hh;
+    if (!data.length) {
+        tbody.innerHTML=`<tr><td colspan="${headers.length}" class="text-center py-12 text-gray-600"><i class="fas fa-search mr-2 opacity-50"></i>Tidak ada data cocok dengan filter</td></tr>`;
+    } else {
+        let bh='';
+        data.forEach(r=>{bh+='<tr>';headers.forEach(c=>{bh+='<td>'+cell(c,r[c])+'</td>';});bh+='</tr>';});
+        tbody.innerHTML=bh;
+    }
+    cnt.textContent=data.length===total?total+' data':data.length+' dari '+total+' data';
+}
+
+function cell(col,val) {
+    const v=String(val||'').trim();
+    if (!v) return '<span class="text-gray-700">-</span>';
+    const c=col.toUpperCase();
+    if (c==='STATUS'){const s=SS[v.toUpperCase()]||DS;return `<span class="s-badge" style="background:${s.bg};color:${s.tx}"><span class="s-dot" style="background:${s.dt}"></span>${esc(v)}</span>`;}
+    if (c==='GRADE'){const g=GS[v.toUpperCase()]||DG;return `<span class="g-badge" style="background:${g.bg};color:${g.tx}">${esc(v)}</span>`;}
+    if (c==='KONDISI'){const k=KS[v.toUpperCase()]||DK;return `<span class="s-badge" style="background:${k.bg};color:${k.tx}">${esc(v)}</span>`;}
+    if (c.includes('QTY')){const n=parseFloat(v.replace(/\./g,'').replace(',','.'));if(!isNaN(n))return `<span class="block text-right font-mono text-white">${n.toLocaleString('id-ID')}</span>`;}
+    if (c==='KODE') return `<span class="font-mono text-accent/70 text-xs">${esc(v)}</span>`;
+    if (c.includes('ESTIMASI')||c.includes('BULAN')) return `<span class="text-amber-300/70">${esc(v)}</span>`;
+    return esc(v);
+}
+
+function stats() {
+    const d=store;
+    anim('s-total',d.length);
+    const tq=d.reduce((s,r)=>{const n=parseFloat(String(r['QTY PANEN']||'').replace(/\./g,'').replace(',','.'));return s+(isNaN(n)?0:n);},0);
+    anim('s-qty',tq);
+    const td=d.reduce((s,r)=>{const n=parseFloat(String(r['TERDISTRIBUSI']||'').replace(/\./g,'').replace(',','.'));return s+(isNaN(n)?0:n);},0);
+    anim('s-dist',td);
+    let nearest=null;
+    d.forEach(r=>{const p=parseEstBulan(r['ESTIMASI BULAN PANEN']);if(p&&(!nearest||p<nearest))nearest=p;});
+    document.getElementById('s-near').textContent=nearest?MSHORT[nearest.getMonth()]+' '+nearest.getFullYear():'-';
+}
+
+function doSort(col) {
+    if(sCol===col) sDir=sDir==='asc'?'desc':'asc'; else{sCol=col;sDir='asc';}
+    render();
+}
+
+// ============================================
+// STATES
+// ============================================
+function setLoad(on) {
+    document.getElementById('v-load').classList.toggle('hidden',!on);
+    document.getElementById('tbl-wrap').classList.toggle('hidden',on);
+    document.getElementById('v-err').classList.add('hidden');
+}
+function setErr(msg) {
+    document.getElementById('v-load').classList.add('hidden');
+    document.getElementById('tbl-wrap').classList.add('hidden');
+    document.getElementById('v-err').classList.remove('hidden');
+    document.getElementById('err-msg').textContent=msg;
+}
+
+// ============================================
+// EXPORT CSV
+// ============================================
+function exportCSV() {
+    const d=filtered();
+    if(!d.length){toast('Tidak ada data untuk di-export','warning');return;}
+    let csv=headers.join(',')+'\n';
+    d.forEach(r=>{csv+=headers.map(h=>{let v=String(r[h]||'');if(v.includes(',')||v.includes('"')||v.includes('\n'))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(',')+'\n';});
+    const b=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(b);
+    a.download=`data_akan_panen_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href);
+    toast(d.length+' data di-export','success');
+}
+
+// ============================================
+// TOAST
+// ============================================
+function toast(msg,type='info') {
+    const c={success:{bg:'rgba(16,185,129,.15)',bd:'rgba(16,185,129,.3)',tx:'#34D399',ic:'fa-check-circle'},error:{bg:'rgba(239,68,68,.15)',bd:'rgba(239,68,68,.3)',tx:'#F87171',ic:'fa-times-circle'},warning:{bg:'rgba(245,158,11,.15)',bd:'rgba(245,158,11,.3)',tx:'#FBBF24',ic:'fa-exclamation-circle'},info:{bg:'rgba(59,130,246,.15)',bd:'rgba(59,130,246,.3)',tx:'#60A5FA',ic:'fa-info-circle'}}[type]||{bg:'rgba(59,130,246,.15)',bd:'rgba(59,130,246,.3)',tx:'#60A5FA',ic:'fa-info-circle'};
+    const el=document.createElement('div');
+    el.className='toast flex items-center gap-2 px-4 py-3 rounded-lg text-sm backdrop-blur-md';
+    el.style.cssText=`background:${c.bg};border:1px solid ${c.bd};color:${c.tx};min-width:240px`;
+    el.innerHTML=`<i class="fas ${c.ic}"></i><span>${esc(msg)}</span>`;
+    document.getElementById('toasts').appendChild(el);
+    setTimeout(()=>{el.classList.add('out');el.addEventListener('animationend',()=>el.remove());},3000);
+}
+
+// ============================================
+// UTILS
+// ============================================
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+function anim(id,target,dur=600) {
+    const el=document.getElementById(id);if(!el)return;
+    if(target===0){el.textContent='0';return;}
+    const st=performance.now(),fl=!Number.isInteger(target);
+    (function up(now){
+        const p=Math.min((now-st)/dur,1),e=1-Math.pow(1-p,3);
+        el.textContent=fl?(target*e).toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g,'.'):Math.floor(target*e).toLocaleString('id-ID');
+        if(p<1)requestAnimationFrame(up);
+    })(st);
+}
+
+// ============================================
+// EVENTS
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (API_URL.includes('YOUR_DEPLOYMENT_ID')) document.getElementById('cfg-warn').style.display='';
+
+    // Toggle password
+    document.getElementById('btn-pw').addEventListener('click',()=>{
+        const i=document.getElementById('i-pass'),ic=document.querySelector('#btn-pw i');
+        if(i.type==='password'){i.type='text';ic.classList.replace('fa-eye','fa-eye-slash');}
+        else{i.type='password';ic.classList.replace('fa-eye-slash','fa-eye');}
+    });
+
+    // Submit login
+    document.getElementById('frm-login').addEventListener('submit',e=>{e.preventDefault();doLogin();});
+
+    // Search debounced
+    let st;
+    document.getElementById('i-search').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{qSearch=e.target.value;render();},180);});
+
+    // Filters
+    document.getElementById('f-kondisi').addEventListener('change',e=>{fKondisi=e.target.value;render();});
+    document.getElementById('f-status').addEventListener('change',e=>{fStatus=e.target.value;render();});
+    document.getElementById('f-grade').addEventListener('change',e=>{fGrade=e.target.value;render();});
+
+    // Keyboard
+    document.addEventListener('keydown',e=>{
+        if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();const si=document.getElementById('i-search');if(si&&!document.getElementById('v-dash').classList.contains('hidden')){si.focus();si.select();}}
+        if(e.key==='Escape'&&document.activeElement===document.getElementById('i-search')){document.getElementById('i-search').value='';qSearch='';render();document.getElementById('i-search').blur();}
+        if(e.key==='Enter'&&!document.getElementById('v-login').classList.contains('hidden')){const a=document.activeElement;if(a.id==='i-user'||a.id==='i-pass')doLogin();}
+    });
+
+    // Init
+    checkSess();
+});
+</script>
+</body>
+</html>

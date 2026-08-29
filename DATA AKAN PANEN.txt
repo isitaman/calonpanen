@@ -1,0 +1,109 @@
+KODE, NAMA PRODUK, KODE GENUS, KONDISI, GRADE, QTY PANEN, ALOKASI, TERDISTRIBUSI, QTY, ESTIMASI BULAN PANEN, STATUS
+AV, Vanda No ID, AV, Pembesaran Seedling, -, 910, 100, 336, 910, Desember 2025, Belum
+AP, Phalaenopsis No ID, AP, Pembesaran Seedling, -, 327, 100, 0, 227, Januari 2026, Belum
+ADB, Dendrobium Bulat No ID, ADB, Pembesaran Seedling, -, 0, 100, 111, 0, Januari 2026, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 6, 100, 1.065, 6, Desember 2025, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 491, 100, 1.065, 491, Januari 2026, Belum
+AP, Phalaenopsis No ID, AP, Pembesaran Seedling, -, 2.577, 100, 0, 2.477, Februari 2026, Belum
+AV, Vanda No ID, AV, Pembesaran Seedling, -, -103, 100, 336, -103, Februari 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 122, 100, 1.454, 122, Maret 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 3.304, 100, 1.454, 3.304, Mei 2026, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 840, 100, 1.065, 840, Maret 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 0, 100, 1.454, 0, Desember 2025, Belum
+ADB, Dendrobium Bulat No ID, ADB, Pembesaran Seedling, -, 1.278, 100, 111, 1.278, April 2026, Belum
+ADB, Dendrobium Bulat No ID, ADB, Pembesaran Seedling, -, 444, 100, 111, 444, Mei 2026, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 4.033, 100, 1.065, 4.033, Mei 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 724, 100, 1.454, 724, Mei 2026, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 31, 100, 1.065, 31, Februari 2026, Belum
+AD, Dendrobium No ID, AD, Pembesaran Seedling, -, 3.384, 100, 1.065, 3.384, Juli 2026, Belum
+ADB, Dendrobium Bulat No ID, ADB, Pembesaran Seedling, -, -67, 100, 111, -67, Juli 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 9.433, 100, 1.454, 9.433, April 2026, Belum
+AV, Vanda No ID, AV, Pembesaran Seedling, -, 377, 100, 336, 377, Februari 2026, Belum
+ALL, Genus Lain No ID, ALL, Pembesaran Seedling, -, 574, 100, 7, 481, Januari 2026, Belum
+AP, Phalaenopsis No ID, AP, Pembesaran Seedling, -, 516, 100, 0, 416, Januari 2026, Belum
+AC, Cattleya No ID, AC, Pembesaran Seedling, -, 3.663, 100, 1.454, 3.663, Januari 2026, Belum
+AV, Vanda No ID, AV, Pembesaran Seedling, -, 714, 100, 336, 714, Juni 2026, Belum
+ALL, Genus Lain No ID, ALL, Pembesaran Seedling, -, 59, 100, 7, -34, Mei 2026, Belum
+ADB121, Dendrobium Mini Pearl, ADB, Pembesaran Seedling, -, 220, 100, 0, 120, Juli 2026, Belum
+AD1456, Den. Mpu Gandring 'Dark' x Den. Wishnu, AD, Pembesaran Seedling, -, 559, 100, 0, 459, Juli 2026, Belum
+CAC1, C. Snow White, AC, Pembesaran Seedling, -, 72, 100, 1, -27, Mei 2026, Belum
+AD1479, Den. Anusopati x Den. Ly's Pride #1, AD, Pembesaran Seedling, -, 278, 100, 0, 178, Juli 2026, Belum
+ADB123, Den. Banana Royal x Den. tangerinum, ADB, Pembesaran Seedling, -, -3, 100, 0, -103, Juli 2026, Belum
+CADB2, Den. Candy Stripe x Den. Humming Butterfly, ADB, Pembesaran Seedling, -, -366, 100, 66, -400, Agustus 2026, Belum
+AD1457, Den. gouldii 'WR x Den. tangerinum, AD, Pembesaran Seedling, 0% Normal / 0% Afkir, 0, 100, 0, -100, Oktober 2026, Tertunda
+AD1464, Den. Tumapel x Den. Wishnu, AD, Pembesaran Seedling, -, -186, 100, 0, -286, Agustus 2026, Belum
+AD1461, Den. Mpu Gandring 'Dark' x Selfing, AD, Pembesaran Seedling, -, -374, 100, 0, -474, Agustus 2026, Belum
+AD1458, Den. gouldii 'Yellow' x Selfing, AD, Pembesaran Seedling, -, -331, 100, 0, -431, Agustus 2026, Belum
+AD1478, Den. Wishnu x Den. Yanny Rahmasari, AD, Pembesaran Seedling, 0% Normal / 0% Afkir, 0, 100, 0, -100, Oktober 2026, Tertunda
+AD1469, Den. Ly's Pride #1 x Den. Tumapel, AD, Pembesaran Seedling, -, -311, 100, 0, -411, September 2026, Belum
+AD1482, Den. archipelagense x Selfing, AD, Pembesaran Seedling, -, 499, 100, 0, 399, September 2026, Belum
+AD1459, Den. Brown Pixie x Den. Yip Sow Yen, AD, Pembesaran Seedling, -, 642, 100, 0, 542, September 2026, Belum
+ADB124, Den. Banana Royal x Den. Puci, ADB, Pembesaran Seedling, -, 390, 100, 0, 290, September 2026, Belum
+AD1484, Den. Relict's Of Wira x Den. Wishnu, AD, Pembesaran Seedling, -, 879, 100, 0, 779, September 2026, Belum
+AD1485, Den. Jalibang x Den. Velvet Las, AD, Pembesaran Seedling, -, 884, 100, 0, 784, September 2026, Belum
+ALL83, Rdza. venusta x Tolu. Christ Moon, ALL, Pembesaran Seedling, -, 1.074, 100, 0, 974, Desember 2026, Belum
+ALL82, Rdza. venusta x Selfing, ALL, Pembesaran Seedling, -, 900, 100, 0, 800, Desember 2026, Belum
+AD1494, Den. Balaputradewa Two x Den. Sam Poo Kong 'Yellow', AD, Pembesaran Seedling, -, 772, 100, 0, 672, Oktober 2026, Belum
+AD1491, Den. Ly's Pride #1 x Den. Yanny Rahmasari, AD, Pembesaran Seedling, -, 1.100, 100, 0, 1.000, Oktober 2026, Belum
+AD1483, Den. Lingkar Wilis x Den. violaceoflavens 'Mini', AD, Pembesaran Seedling, -, 789, 100, 0, 689, Oktober 2026, Belum
+AD1481, Den. Bhayangkara Jaya x Den. Velvet Las, AD, Pembesaran Seedling, -, 579, 100, 0, 479, Oktober 2026, Belum
+AD1495, Den. Danish x Den. Wishnu, AD, Pembesaran Seedling, -, 650, 100, 0, 550, Oktober 2026, Belum
+AD1488, Den. Ly's Pride #1 x Den. Wishnu, AD, Pembesaran Seedling, -, 850, 100, 0, 750, Oktober 2026, Belum
+AD1493, Den. lineale x Den. wulaiense, AD, Pembesaran Seedling, -, 706, 100, 0, 606, November 2026, Belum
+AD1503, Den. Jalibang x Den. Yosie Beauty, AD, Pembesaran Seedling, -, 393, 100, 0, 293, November 2026, Belum
+AD1489, Den. Dirumahaja 'Yellow' #1 x Den. violaceoflavens 'Mini', AD, Pembesaran Seedling, -, 985, 100, 0, 885, November 2026, Belum
+AP186, Phal. Rothschildiana x Phal. x Intermedia, AP, Pembesaran Seedling, -, 95, 100, 0, -5, September 2026, Belum
+AD1476, Den. percnanthum, AD, Pembesaran Seedling, -, 185, 100, 0, 85, November 2026, Belum
+AD1490, Den. nindii, AD, Pembesaran Seedling, -, 1.056, 100, 0, 956, November 2026, Belum
+AD1492, Den. Singosari 'Red' x Den. SR Nathan, AD, Pembesaran Seedling, -, 210, 100, 0, 110, Januari 2027, Belum
+AD1502, Den. SR Nathan x Den. Wira Pride #1, AD, Pembesaran Seedling, -, 645, 100, 0, 545, Januari 2027, Belum
+AD1487, Den. Ly's Pride #1 x Den. SR Nathan, AD, Pembesaran Seedling, -, 1.275, 100, 0, 1.175, Januari 2027, Belum
+AD1510, Den. Michiko x Den. Unisma Malang, AD, Pembesaran Seedling, -, 105, 100, 0, 5, Januari 2027, Belum
+AD1501, Den. Jeffrey Tan x Den. Yosie Beauty, AD, Pembesaran Seedling, -, 740, 100, 0, 640, Januari 2027, Belum
+AD1499, Den. Michiko x Den. Nakhla Argani, AD, Pembesaran Seedling, -, 915, 100, 0, 815, Januari 2027, Belum
+AD1559, Den. Anusopati x Den. Espresso, AD, Pembesaran Seedling, -, 555, 100, 0, 455, Februari 2027, Belum
+AD1576, Den. antennatum var. d'albertisi x Den. macrantum var. pink, AD, Pembesaran Seedling, -, 340, 100, 0, 240, Februari 2027, Belum
+AD1537, Den. Anusopati x Den. Black Bull, AD, Pembesaran Seedling, -, 343, 100, 0, 243, Februari 2027, Belum
+AC262, C. amethystoglossa x Selfing, AC, Pembesaran Seedling, -, 952, 100, 0, 852, November 2026, Belum
+ALL84, Onc. Hwuluduen Wasp 'Queen Bee' x Rdza. venusta, ALL, Pembesaran Seedling, -, 335, 100, 0, 235, Maret 2027, Belum
+AD1522, Den. shiraishii x Den. Unisma Malang, AD, Pembesaran Seedling, -, 112, 100, 0, 12, Januari 2027, Belum
+AD1509, Den. helix 'Thalacea' x Den. Indirawati, AD, Pembesaran Seedling, -, 60, 100, 0, -40, Januari 2027, Belum
+AD1480, Den. helix 'Pomeo Brown' x Den. Yosie Beauty, AD, Pembesaran Seedling, -, 833, 100, 0, 733, Januari 2027, Belum
+AC266, Laeliocatanthe Infatuation, AC, Pembesaran Seedling, -, 849, 100, 0, 749, November 2026, Belum
+AC268, Ctt. Chocolate Drop x Rth. Nell Hammer, AC, Pembesaran Seedling, -, 369, 100, 0, 269, November 2026, Belum
+ADB125, Den. Stefanie Sun x Den. violaceoflavens 'Mini', ADB, Pembesaran Seedling, -, 716, 100, 0, 616, Maret 2027, Belum
+AD1519, Den. Lingkar Wilis x Den. Pink Lips #2, AD, Pembesaran Seedling, -, 232, 100, 0, 132, Maret 2027, Belum
+AD1498, Den. Hidayatul Husna x Den. Jalibang, AD, Pembesaran Seedling, -, 904, 100, 0, 804, Maret 2027, Belum
+AD1472, Den. Numinbah Beauty-Den. Batavia Blues x Selfing, AD, Pembesaran Seedling, -, 206, 100, 0, 106, Maret 2027, Belum
+AD1528, Den. Espresso x Den. Husmadi, AD, Pembesaran Seedling, -, 353, 100, 0, 253, Maret 2027, Belum
+AD1534, Den. Henry Eksan x Den. Jayanagara, AD, Pembesaran Seedling, -, 260, 100, 0, 160, Maret 2027, Belum
+AD1529, Den. Maharaja Dermasatia x Den. Wishnu, AD, Pembesaran Seedling, -, 370, 100, 0, 270, Maret 2027, Belum
+AD1504, Den. Dr Ririe Rengganis x Den. violaceoflavens 'Mini', AD, Pembesaran Seedling, -, 875, 100, 0, 775, Maret 2027, Belum
+AC272, Rth. Netrasiri Starbright 'Malaysia' x Selfing, AC, Pembesaran Seedling, -, 555, 100, 0, 455, Desember 2026, Belum
+AC275, Ctt. Chocolate Drop x Rlc. Haadyai Delight, AC, Pembesaran Seedling, -, 590, 100, 0, 490, Desember 2026, Belum
+AC281, C. schilleriana x C. Tainan City, AC, Pembesaran Seedling, -, 740, 100, 0, 640, Desember 2026, Belum
+AD1556, Den. Henry Eksan x Den. Wishnu, AD, Pembesaran Seedling, -, 256, 100, 0, 156, Maret 2027, Belum
+AD1573, Den. leporinum x Den. trilamellatum, AD, Pembesaran Seedling, -, 540, 100, 0, 440, April 2027, Belum
+AD1544, Den. leporinum-Den. taurinum x Selfing, AD, Pembesaran Seedling, -, 374, 100, 0, 274, April 2027, Belum
+AD1563, Den. Espresso x Den. Henry Eksan, AD, Pembesaran Seedling, -, 529, 100, 0, 429, April 2027, Belum
+AD1562, Den. Ly's Pride #1 x Selfing, AD, Pembesaran Seedling, -, 470, 100, 0, 370, April 2027, Belum
+AD1539, Den. Anusopati x Den. Henry Eksan, AD, Pembesaran Seedling, -, 227, 100, 0, 127, April 2027, Belum
+AD1523, Den. helix 'WR' x Den. mirbelianum var. kaimana sunset, AD, Pembesaran Seedling, -, 275, 100, 0, 175, April 2027, Belum
+ADB126, Den. Liberty x Den. Suriya Gold-Den. Queen Pink, ADB, Pembesaran Seedling, -, 293, 100, 0, 193, April 2027, Belum
+AD1560, Dendrobium Bethesda Frankelites, AD, Pembesaran Seedling, -, 153, 100, 0, 53, April 2027, Belum
+AD1567, Den. Anusopati x Den. Ly's Pride #1, AD, Pembesaran Seedling, -, 65, 100, 0, -35, April 2027, Belum
+AD1572, Den. Anusopati x Den. Black Bull, AD, Pembesaran Seedling, -, 433, 100, 0, 333, April 2027, Belum
+AD1550, Den. Black Bull x Den. Dr Ririe Rengganis, AD, Pembesaran Seedling, -, 284, 100, 0, 184, April 2027, Belum
+AD1548, Den. Anusopati x Den. Black Spider, AD, Pembesaran Seedling, -, 135, 100, 0, 35, April 2027, Belum
+AD1557, Den. Black Bull x Den. Henry Eksan, AD, Pembesaran Seedling, -, 393, 100, 0, 293, April 2027, Belum
+AD1512, Den. violaceoflavens 'Mini' x Den. Yanny Rahmasari, AD, Pembesaran Seedling, -, 750, 100, 0, 650, April 2027, Belum
+AD1564, Den. lasianthera var. Sepik Blue, AD, Pembesaran Seedling, -, 527, 100, 0, 427, April 2027, Belum
+AD1565, Den. Black Bull x Den. Tabitha, AD, Pembesaran Seedling, -, 298, 100, 0, 198, April 2027, Belum
+ADB131, Den. affine x Den. calophyllum, ADB, Pembesaran Seedling, -, 623, 100, 0, 523, April 2027, Belum
+AD1553, Den. Brown Gloss x Selfing, AD, Pembesaran Seedling, -, 330, 100, 0, 230, April 2027, Belum
+AD1581, Den. spectabile x Den. Thongchai, AD, Pembesaran Seedling, -, 616, 100, 0, 516, April 2027, Belum
+AD1584, Den. larat x Den. macrophyllum 'Jawa', AD, Pembesaran Seedling, -, 618, 100, 0, 518, April 2027, Belum
+AD1551, Den. Henry Eksan x Den. Husmadi, AD, Pembesaran Seedling, -, 125, 100, 0, 25, April 2027, Belum
+ADB129, Den. Bhayangkara Jaya x Den. Liberty, ADB, Pembesaran Seedling, -, 768, 100, 0, 668, April 2027, Belum
+AD1524, Den. Husmadi x Den. violaceoflavens 'Mini', AD, Pembesaran Seedling, -, 290, 100, 0, 190, April 2027, Belum
+AD1540, Den. Indirawati x Den. Kuranda Giant 'White', AD, Pembesaran Seedling, -, 265, 100, 0, 165, April 2027, Belum
