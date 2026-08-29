@@ -1406,7 +1406,7 @@ function renderProyeksi() {
     const now = new Date();
     const months = [];
     
-    for (let i = 3; i <= 5; i++) {
+    for (let i = 2; i <= 5; i++) {
         const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
         months.push({ key: monthKey(d), label: monthFull(d), total: 0, seedling: 0, remaja: 0, dewasa: 0 });
     }
