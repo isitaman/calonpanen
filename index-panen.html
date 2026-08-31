@@ -677,30 +677,30 @@ let resumeData = null, resumeMonths = [], selectedMonthIndex = 0;
 // STYLES CONFIG
 // ============================================
 const STATUS_STYLES = {
-    'TERVALIDASI': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'SIAP PANEN': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'PANEN': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'PROSES': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
-    'BELUM': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
-    'TERTUNDA': { bg: 'rgba(239,68,68,0.15)', color: '#f87171' },
+    'TERVALIDASI': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'SIAP PANEN': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'PANEN': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'PROSES': { bg: 'rgba(59,130,246,0.12)', color: '#1d4ed8' },
+    'BELUM': { bg: 'rgba(245,158,11,0.12)', color: '#b45309' },
+    'TERTUNDA': { bg: 'rgba(239,68,68,0.12)', color: '#b91c1c' },
 };
 const GRADE_STYLES = {
-    'A': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'B': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
-    'C': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
-    '-': { bg: 'rgba(107,114,128,0.15)', color: '#9ca3af' },
+    'A': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'B': { bg: 'rgba(59,130,246,0.12)', color: '#1d4ed8' },
+    'C': { bg: 'rgba(245,158,11,0.12)', color: '#b45309' },
+    '-': { bg: 'rgba(107,114,128,0.12)', color: '#4b5563' },
 };
 const KONDISI_STYLES = {
-    'PEMBESARAN SEEDLING': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'SEEDLING': { bg: 'rgba(34,197,94,0.15)', color: '#4ade80' },
-    'REMAJA': { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
-    'DEWASA': { bg: 'rgba(251,191,36,0.15)', color: '#fbbf24' },
+    'PEMBESARAN SEEDLING': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'SEEDLING': { bg: 'rgba(34,197,94,0.12)', color: '#15803d' },
+    'REMAJA': { bg: 'rgba(59,130,246,0.12)', color: '#1d4ed8' },
+    'DEWASA': { bg: 'rgba(245,158,11,0.12)', color: '#b45309' },
 };
 const KONDISI_COLORS = {
-    seedling: '#4ade80',
-    remaja: '#60a5fa',
-    dewasa: '#fbbf24',
-    lainnya: '#9ca3af'
+    seedling: '#16a34a',
+    remaja: '#2563eb',
+    dewasa: '#d97706',
+    lainnya: '#6b7280'
 };
 
 // ============================================
@@ -844,8 +844,8 @@ function showDashboard() {
     const roleEl = document.getElementById('user-role');
     roleEl.textContent = user.role.toUpperCase();
     roleEl.style.cssText = user.role === 'budidaya' 
-        ? 'background: rgba(34,197,94,0.15); color: #4ade80;'
-        : 'background: rgba(59,130,246,0.15); color: #60a5fa;';
+        ? 'background: rgba(34,197,94,0.12); color: #15803d;'
+        : 'background: rgba(59,130,246,0.12); color: #1d4ed8;';
 
     // Show/hide tabs based on role
     const showLebih = user.role === 'budidaya';
